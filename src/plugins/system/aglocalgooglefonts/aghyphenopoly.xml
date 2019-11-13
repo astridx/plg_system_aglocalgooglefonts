@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="2.5" type="plugin" group="system" method="upgrade">
+    <name>PLG_SYSTEM_AGHYPHENOPOLY</name>
+    <author>Astrid Günther</author>
+    <creationDate>##DATE##</creationDate>
+    <copyright>(C) ##YEAR## Astrid Günther. All rights reserved.</copyright>
+    <license>GNU General Public License version 2 or later; see LICENSE.txt</license>
+    <authorEmail>info@astrid-guenther.de</authorEmail>
+    <authorUrl>www.astrid-guenther.de</authorUrl>
+    <version>##VERSION##</version>
+    <description>PLG_SYSTEM_AGHYPHENOPOLY_DESC</description>
+    <files>
+        ##FILES##
+    </files>
+    <!-- Media files -->
+    <media 
+        folder="media/plg_system_aghyphenopoly" 
+        destination="plg_system_aghyphenopoly">
+        ##MEDIA_FILES##
+    </media>
+    <config>
+        <fields name="params">
+            <fieldset name="basic">
+            </fieldset>
+            <fieldset name="path">
+                <field 
+                    name="pathspacer" 
+                    type="spacer" 
+                    label="PLG_AGHYPHENOPOLY_PATH_DESC" 
+                />
+                <field 
+                    name="maindir" 
+                    type="text"
+                    size="120"
+                    default="/media/plg_system_aghyphenopoly/hyphenopoly/" 
+                    filter="string"
+                    label="PLG_SYSTEM_AGHYPHENOPLY_MAINDIR"
+                    description="" 
+                />
+                <field 
+                    name="patterndir" 
+                    type="text"
+                    size="120"
+                    default="/media/plg_system_aghyphenopoly/hyphenopoly/patterns/" 
+                    filter="string"
+                    label="PLG_SYSTEM_AGHYPHENOPLY_PATTERNDIR"
+                    description="" 
+                />
+            </fieldset>
+            <fieldset name="setup">
+                <field 
+                    name="setupspacer" 
+                    type="spacer" 
+                    label="PLG_AGHYPHENOPOLY_SETUP_DESC" 
+                />
+
+                <field 
+                    name="dontHyphenateClass" 
+                    type="text" 
+                    default="donthyphenate" 
+                    filter="string"
+                    label="PLG_SYSTEM_AGHYPHENOPLY_DONTHYPHENATECLASS"
+                    description="" 
+                />
+
+                <field 
+                    name="normalize" 
+                    type="list" 
+                    default="false"
+                    label="PLG_SYSTEM_AGHYPHENOPLY_NORMALIZE"
+                    description=""
+                >
+                    <option value="true">true</option>
+                    <option value="false">false</option>
+                </field>
+
+                <field 
+                    name="safeCopy" 
+                    type="list" 
+                    default="true"
+                    label="PLG_SYSTEM_AGHYPHENOPLY_SAFECOPY"
+                    description=""
+                >
+                    <option value="true">true</option>
+                    <option value="false">false</option>
+                </field>
+
+                <field 
+                    name="timeout" 
+                    type="integer" 
+                    default="1000" 
+                    label="PLG_SYSTEM_AGHYPHENOPLY_TIMEOUT" 
+                    description="" 
+                    first="500" 
+                    last="10000" 
+                    step="500" 
+                />
+
+                <field 
+                    name="defaultLanguage" 
+                    type="filelist" 
+                    directory="media/plg_system_aghyphenopoly/hyphenopoly/patterns/"
+                    stripext="1"
+                    default="de"
+                    hide_default="1" 
+                    filter="\.hpb$" 
+                    multiple="false"
+                    label="PLG_SYSTEM_AGHYPHENOPLY_LANG"
+                    description="" 
+                />
+                <field 
+                    name="selectors" 
+                    type="subform" 
+                    min="1" 
+                    max="100" 
+                    multiple="true"
+                    label="PLG_AGHYPHENOPOLY_LANGUAGES_SELECTORS_LABEL" 
+                    description=""
+                    formsource="plugins/system/aghyphenopoly/myforms/selectors-subform.xml"
+                    layout="joomla.form.field.subform.repeatable" 
+                    groupByFieldset="false"
+                    default='{"selectors0":{"selectorname":"body","compound":"all","hyphen":"\\u00AD","minWordLength":"6","leftmin":"3","rightmin":"3","orphanControl":"1","active":"1"}}'
+                />                
+            </fieldset>
+
+            <fieldset 
+                name="languages" 
+                label="PLG_AGHYPHENOPOLY_LANGUAGES" 
+                description=""
+            >
+                <field 
+                    name="languagesspacer" 
+                    type="spacer" 
+                    label="PLG_AGHYPHENOPOLY_LANGUAGES_DESC" 
+                />
+
+                <field 
+                    name="languages" 
+                    type="subform" 
+                    min="1" 
+                    max="100" 
+                    multiple="true"
+                    label="PLG_AGHYPHENOPOLY_LANGUAGES_REQUIRED_LABEL" 
+                    description=""
+                    formsource="plugins/system/aghyphenopoly/myforms/languages-subform.xml"
+                    layout="joomla.form.field.subform.repeatable-table" 
+                    groupByFieldset="false"
+                    default='{"languages0":{"lang":"de","langtext":"Silbentrennungsalgorithmus","active":"0"}}'
+                />
+                
+                <field 
+                    name="fallbacklanguages" 
+                    type="subform" 
+                    min="1" 
+                    max="100" 
+                    multiple="true"
+                    label="PLG_AGHYPHENOPOLY_LANGUAGES_FALLBACK_LABEL" 
+                    description=""
+                    formsource="plugins/system/aghyphenopoly/myforms/languages-subform-fallback.xml"
+                    layout="joomla.form.field.subform.repeatable-table" 
+                    groupByFieldset="false"
+                    default='{"fallbacklanguages0":{"fallbacktext":"de-de","fallbacklang":"de","fallbackstring":"FORCEHYPHENOPOLY","active":"1"}}'
+                />                
+            </fieldset>
+
+            <fieldset 
+                name="exceptions" 
+                label="PLG_AGHYPHENOPOLY_EXCEPIONS" 
+                description=""
+            >
+                <field 
+                    name="exceptionsspacer" 
+                    type="spacer" 
+                    label="PLG_AGHYPHENOPOLY_EXCEPTIONS_DESC" 
+                />
+
+                <field 
+                    name="exceptions" 
+                    type="subform" 
+                    min="1" 
+                    max="100" 
+                    multiple="true"
+                    label="PLG_AGHYPHENOPOLY_EXEPTIONS_LABEL" 
+                    description=""
+                    formsource="plugins/system/aghyphenopoly/myforms/exceptions-subform.xml"
+                    layout="joomla.form.field.subform.repeatable-table" 
+                    groupByFieldset="false"
+                    default='{"exceptions0":{"exceptionlang":"de","exceptiontext":"Astrid, Joomla, website","active":"1"}}'
+                />
+                
+            </fieldset>
+
+            <fieldset 
+                name="css" 
+                label="css">
+
+                <field 
+                    type="spacer" 
+                    name="css" 
+                    label="PLG_AGHYPHENOPOLY_CSS" 
+                />
+
+                <field 
+                    name="addCSS" 
+                    type="list" 
+                    default="0"
+                    label="PLG_SYSTEM_AGHYPHENOPLY_ADDCSS"
+                    description=""
+                >
+                    <option value="1">JYES</option>
+                    <option value="0">JNO</option>
+                </field>
+            </fieldset>
+
+            <fieldset 
+                name="attribution" 
+                label="Attribution">
+
+                <field 
+                    type="spacer" 
+                    name="spacerthanks" 
+                    label="PLG_AGHYPHENOPOLY_SPACERTHANKS" 
+                />
+
+                <field 
+                    name="oldjs" 
+                    type="hidden"
+                    default="" 
+                    filter="string"
+                    label=""
+                    description="" 
+                />
+            </fieldset>
+        </fields>
+    </config>
+</extension>
