@@ -18,16 +18,40 @@ jimport('joomla.plugin.plugin');
  */
 class PlgSystemAglocalgooglefonts extends JPlugin
 {
+	/**
+	 * Google Fonts Json String.
+	 *
+	 * @var    jsonstring
+	 * @since  1.0.0
+	 */
 	public $_json;
 
+	/**
+	 * Range.
+	 *
+	 * @var    jsonstring
+	 * @since  1.0.0
+	 */
 	public $_ranges;
 
+	/**
+	 * Fonts to load local.
+	 *
+	 * @var    jsonstring
+	 * @since  1.0.0
+	 */
 	protected $fonts = array();
 
+	/**
+	 * Fonts to load local.
+	 *
+	 * @var    jsonstring
+	 * @since  1.0.0
+	 */
 	protected $cdns = array();
 
 	/**
-	 * Fonts.
+	 * CDNs to load local.
 	 *
 	 * @var    jsonstring
 	 * @since  1.0.0
