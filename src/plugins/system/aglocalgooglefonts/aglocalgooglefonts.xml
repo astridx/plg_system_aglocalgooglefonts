@@ -1,36 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension version="3.0.0" type="plugin" group="system" method="upgrade">
-	<name>aglocalgooglefonts</name>
-	<author>Astrid Günther</author>
-	<authorEmail>astrid-guenther.de</authorEmail>
-	<authorUrl>astrid-guenther.de</authorUrl>
-	<creationDate>2019</creationDate>
-	<copyright>Copyright (C) 2005 - 2019 Open Source Matters. All rights reserved.</copyright>
-	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
-	<version>1.0.0</version>
-	<description>PLG_SYSTEM_AGLOCALGOOGLEFONTS</description>
+    <name>PLG_SYSTEM_AGLOCALGOOGLEFONTS</name>
+    <author>Astrid Günther</author>
+    <creationDate>##DATE##</creationDate>
+    <copyright>(C) ##YEAR## Astrid Günther. All rights reserved.</copyright>
+    <license>GNU General Public License version 2 or later; see LICENSE.txt</license>
+    <authorEmail>info@astrid-guenther.de</authorEmail>
+    <authorUrl>www.astrid-guenther.de</authorUrl>
+    <version>##VERSION##</version>
+	<description>PLG_SYSTEM_AGLOCALGOOGLEFONTS_DESC</description>
+    <files>
+        ##FILES##
+    </files>
 
-	<files>
-		<filename plugin="aglocalgooglefonts">aglocalgooglefonts.php</filename>
-		<folder>data</folder>
-		<folder>fields</folder>
-		<folder>css</folder>
-		<folder>fonts</folder>
-	</files>
+	<media 
+        folder="media/plg_system_aglocalgooglefonts" 
+        destination="plg_system_aglocalgooglefonts">
+        ##MEDIA_FILES##
+    </media>
 
 	<config>
 		<fields name="params">
 			<fieldset name="basic">	
 				<field 
+					name="note1" 
+					type="note" 
+					label="PLG_SYSTEM_AGLOCALGOOGLEFONTS_NOTE_MODUS_DR" 
+					description="PLG_SYSTEM_AGLOCALGOOGLEFONTS_NOTE_MODUS_DR_DESC" 
+					class="alert" 
+					close="true"
+				/>
+
+				<field 
 					name="modus_dr" 
 					type="radio"
 					description="PLG_SYSTEM_AGLOCALGOOGLEFONTS_MODUS_DR"
 					label="PLG_SYSTEM_AGLOCALGOOGLEFONTS_MODUS_DR"
-					default="0" 
+					default="1" 
 					class="btn-group"
 				>
 					<option value="0">DISABLE</option>
-					<option value="1">replace</option>
+					<option value="1">REPLACE</option>
 				</field>
 
 				<field 
@@ -41,16 +51,18 @@
 					class="alert" 
 					close="true"
 				/>
+
 				<field 
 					name="modus_ac" 
 					type="radio"
 					description="PLG_SYSTEM_AGLOCALGOOGLEFONTS_MODUS_AC"
 					label="PLG_SYSTEM_AGLOCALGOOGLEFONTS_MODUS_AC"
-					default="0" 
+					default="1" 
 					class="btn-group"
 				>
-					<option value="0">auto</option>
-					<option value="1">custom</option>
+					<option value="0">AUTO</option>
+					<option value="1">CUSTOM</option>
+					<option value="2">BOTH</option>
 				</field>
 
 				<field 
@@ -66,7 +78,7 @@
 					label="PLG_SYSTEM_AGLOCALGOOGLEFONTS_ADDCSS"
 					default="0" 
 					class="btn-group"
-					showon="modus_ac:1"
+					showon="modus_ac!:0"
 				>
 					<option value="0">JNO</option>
 					<option value="1">JYES</option>
@@ -84,7 +96,7 @@
 					layout="joomla.form.field.subform.repeatable-table" 
 					groupByFieldset="false" 
 					label="PLG_SYSTEM_AGLOCALGOOGLEFONTS_CSS"
-					showon="addcss:1[AND]modus_ac:1"
+					showon="addcss:1[AND]modus_ac!:0"
 				/>	
 
 				<field 
@@ -100,7 +112,7 @@
 					label="PLG_SYSTEM_AGLOCALGOOGLEFONTS_ADDCDN"
 					default="0" 
 					class="btn-group"
-					showon="modus_ac:1"
+					showon="modus_ac!:0"
 				>
 					<option value="0">JNO</option>
 					<option value="1">JYES</option>
@@ -118,7 +130,7 @@
 					layout="joomla.form.field.subform.repeatable-table" 
 					groupByFieldset="false" 
 					label="PLG_SYSTEM_AGLOCALGOOGLEFONTS_CDN"
-					showon="addcdn:1[AND]modus_ac:1"
+					showon="addcdn:1[AND]modus_ac!:0"
 				/>	
 
 				<field 

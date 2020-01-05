@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <extension type="package" version="1.0" method="upgrade">
-	<name>pkg_aghyphenopoly</name>
-	<packagename>aghyphenopoly</packagename>
+	<name>PKG_AGLOCALGOOGLEFONTS</name>
+	<packagename>aglocalgooglefonts</packagename>
 	<creationDate>##DATE##</creationDate>
 	<packager>Astrid Günther</packager>
 	<copyright>(C) ##YEAR## Astrid Günther. All rights reserved.</copyright>
@@ -12,17 +12,17 @@
 	<authorUrl>www.astrid-guenther.de</authorUrl>
 	<version>##VERSION##</version>
 	<license>GNU General Public License version 2 or later</license>
-	<description>PKG_AGHYPHENOPOLY_XML_DESCRIPTION</description>
+	<description>PKG_AGLOCALGOOGLEFONTS_XML_DESCRIPTION</description>
 	<scriptfile>script.php</scriptfile>
 	<files>
 		<!-- The id for each extension is the element stored in the DB -->
-		<file type="plugin" id="aghyphenopoly" group="system">plg_system_aghyphenopoly.zip</file>
+		<file type="plugin" id="aglocalgooglefonts" group="system">plg_system_aglocalgooglefonts.zip</file>
 	</files>
 	<languages folder="language">
-		<language tag="en-GB">en-GB/en-GB.pkg_aghyphenopoly.sys.ini</language>
+		<language tag="en-GB">en-GB/en-GB.pkg_aglocalgooglefonts.sys.ini</language>
 	</languages>
 	<updateservers>
 		<!-- Note: No spaces or linebreaks allowed between the server tags -->
-		<server type="extension" name="Hyphenopoly Update Site">https://raw.githubusercontent.com/astridx/pkg_aghyphenopoly/master/aghyphenopoly-update.xml</server>
+		<server type="extension" name="LocalGoogleFonts Update Site">https://raw.githubusercontent.com/astridx/pkg_aglocalgooglefonts/master/aglocalgooglefonts-update.xml</server>
 	</updateservers>
 </extension>

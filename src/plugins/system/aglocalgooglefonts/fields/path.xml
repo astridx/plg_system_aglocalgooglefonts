@@ -8,12 +8,14 @@
 			type="path"
 			default=""
 			label="PLG_SYSTEM_AGLOCALGOOGLEFONTS_PATH"
+			description="PLG_SYSTEM_AGLOCALGOOGLEFONTS_PATH1_DESC"
 			filter="string"
 		/>
 		<field name="file"
 			type="text"
 			default=""
 			label="PLG_SYSTEM_AGLOCALGOOGLEFONTS_FILE"
+			description="PLG_SYSTEM_AGLOCALGOOGLEFONTS_PATH2_DESC"
 			filter="string"
 		/>
 	</fieldset>

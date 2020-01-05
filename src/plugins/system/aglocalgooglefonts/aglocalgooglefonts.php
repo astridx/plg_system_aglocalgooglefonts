@@ -83,26 +83,25 @@ class PlgSystemAglocalgooglefonts extends JPlugin
 		$template = strtolower($this->app->getTemplate());
 		$body = $this->app->getBody();
 
-		// If auto / Else custom
-		if ($this->params->get('modus_ac', 0) == 0)
-		{
-			if (strpos($template, 'yoo') !== false)
-			{
-				// Todo test Yoo $body = $this->disable_yootheme_css($body, $template);
-			}
-		}
-		else
-		{
-			$custompath = $this->params->get('addcssfiles');
-			$body = $this->disable_custommode_css($body, $custompath);
-			$customcdnpath = $this->params->get('addcdnfiles');
-			$body = $this->disable_custommode_cdn($body, $customcdnpath);
-		}
-
-		$body = $this->disable($body);
-
 		// Should we replace or is disable enought?
 		$replace = $this->params->get('modus_dr', 0);
+
+		// Custom
+		if ($this->params->get('modus_ac', 0) == 1 || $this->params->get('modus_ac', 2))
+		{
+			$custompath = $this->params->get('addcssfiles');
+			$body = $this->disable_custommode_css($body, $custompath, $replace);
+			$customcdnpath = $this->params->get('addcdnfiles');
+			$body = $this->disable_custommode_cdn($body, $customcdnpath, $replace);
+		}
+
+		// Auto
+		if ($this->params->get('modus_ac', 0) == 0 || $this->params->get('modus_ac', 2))
+		{
+			$body = $this->disable_autotheme_css($body, $template, $replace);
+		}
+
+		$body = $this->disable($body, $replace);
 
 		if ($replace == 1)
 		{
@@ -116,8 +115,7 @@ class PlgSystemAglocalgooglefonts extends JPlugin
 
 			foreach ($this->cdns as $cdn)
 			{
-				// <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/noframework.waypoints.min.js"" defer async></script>
-				// todo bisher nur js und async oder defer einfügen
+				// Todo bisher nur js und async oder defer einfügen
 				$localcdnfile = $this->process_cdns_url($cdn);
 				$localcdnpath = JURI::root() . 'plugins/system/aglocalgooglefonts/cdns/';
 				$string_to_insert = '<script src="' . $localcdnpath . $localcdnfile . '"></script>';
@@ -215,8 +213,6 @@ class PlgSystemAglocalgooglefonts extends JPlugin
 		$css = array();
 		require_once dirname(__FILE__) . "/helper/google-font.php";
 
-		// Jimport('\GoogleFont');
-
 		/**
 		 * Each family can have multiple variants/weights
 		 */
@@ -301,7 +297,7 @@ class PlgSystemAglocalgooglefonts extends JPlugin
 		foreach ($families as $k => $font)
 		{
 			$font_query = explode(':', $font);
-			$font_name = trim($font_query[0]);
+			$font_name = rtrim(trim($font_query[0]), "'");
 
 			if (empty($font_query[1]))
 			{
@@ -327,12 +323,6 @@ class PlgSystemAglocalgooglefonts extends JPlugin
 				$subsets = array_merge($subsets, $font_subs);
 			}
 		}
-
-		// Add fored subsets
-		/*
-		  if (Plugin::options()->force_subsets) {
-		  $subsets = array_merge($subsets, (array) Plugin::options()->force_subsets);
-		  } */
 
 		// Remove duplicates
 		$subsets = array_unique($subsets);
@@ -369,84 +359,85 @@ class PlgSystemAglocalgooglefonts extends JPlugin
 
 		$name .= '.css';
 
-		// $file = $this->get_upload_path() . sanitize_file_name($name);
 		$file = JPATH_PLUGINS . '/system/aglocalgooglefonts/css/' . $name;
 
-		// Plugin::file_system()->put_contents($file, $css, FS_CHMOD_FILE);
 		file_put_contents($file, $css);
 
 		return $name;
 	}
 
-	public function disable($text)
+	/**
+	 * Disable
+	 *
+	 * @param string|array  $text
+	 * @param string|null   $replace
+	 */
+	public function disable($text, $replace)
 	{
 		preg_match_all('/<link[^>]*href=["{1}|\'{1}](.*?)fonts\.google(.*?)["{1}|\'{1}][^>]*>/', $text, $matches);
 
-		// Todo zweite zeile nur if replace
 		foreach ($matches[0] as $matchIndex => $match)
 		{
 			$text = str_replace($match, '<!--removed google font-->', $text);
-			$this->fonts[] = $matches[1][$matchIndex] . 'fonts.google' . $matches[2][$matchIndex];
+
+			if ($replace == 1)
+			{
+				$this->fonts[] = $matches[1][$matchIndex] . 'fonts.google' . $matches[2][$matchIndex];
+			}
 		}
 
 		preg_match_all('/<script.*src=["{1}|\'{1}](.*)googleapis\.com(.*)webfont\.js(.*)["{1}|\'{1}].*><\/script>/', $text, $matches);
 
-		// Todo zweite zeile nur if replace
 		foreach ($matches[0] as $matchIndex => $match)
 		{
 			$text = str_replace($match, '<!--removed google font-->', $text);
-			$this->fonts[] = $matches[1][$matchIndex] . 'googleapis.com' . $matches[2][$matchIndex];
+
+			if ($replace == 1)
+			{
+				$this->fonts[] = $matches[1][$matchIndex] . 'googleapis.com' . $matches[2][$matchIndex];
+			}
 		}
 
 		preg_match_all('/@import url\(["{1}|\'{1}](.*)fonts\.googleapis\.com(.*)\)(;?)/', $text, $matches);
 
-		// Todo zweite zeile nur if replace
 		foreach ($matches[0] as $matchIndex => $match)
 		{
 			$text = str_replace($match, '/*removed google font*/', $text);
-			$this->fonts[] = $matches[1][$matchIndex] . 'fonts.googleapis.com' . $matches[2][$matchIndex];
+
+			if ($replace == 1)
+			{
+				$this->fonts[] = $matches[1][$matchIndex] . 'fonts.googleapis.com' . $matches[2][$matchIndex];
+			}
 		}
 
 		return $text;
 	}
 
-	public function disable_yootheme_css($text, $tmplt)
+	/**
+	 * Disable CSS file and return the new text
+	 *
+	 * @param string|array  $text
+	 * @param string|null   $tmplt
+	 * @param string|null   $replace
+	 */
+	public function disable_autotheme_css($text, $tmplt, $replace_)
 	{
 		preg_match_all('/<link[^>]*href=["{1}|\'{1}](.*?)templates\/' . $tmplt . '(.*)theme(.*)\.css(.*?)["{1}|\'{1}][^>]*>/', $text, $matches);
 
 		foreach ($matches[0] as $matchIndex => $match)
 		{
 			preg_match('/\/theme(.*?)\.css/', $match, $css);
-			$css = str_replace('/', '', $css[0]);
-			$replace = str_replace($css, 'disable_google_font_' . $css, $match);
-			$text = str_replace($match, $replace, $text);
 
-			$filename = JPATH_THEMES . '/' . $tmplt . '/' . 'css' . '/' . $css;
-
-			// If css file exists
-			if (file_exists($filename))
+			if (!empty($css))
 			{
-				$dest = JPATH_THEMES . '/' . $tmplt . '/' . 'css' . '/' . 'disable_google_font_' . $css;
-				$destchild = JPATH_THEMES . '/' . $tmplt . '_child/' . 'css' . '/' . 'disable_google_font_' . $css;
-				$content = explode(';', JFILE::read($filename));
-				$newcontent = '';
+				$css = str_replace('/', '', $css[0]);
+				$replace = str_replace($css, 'disable_google_font_' . $css, $match);
+				$text = str_replace($match, $replace, $text);
 
-				foreach ($content as $val)
-				{
-					if (preg_match('/@import(.*)fonts\.googleapis\.com(.*)/', $val))
-					{
-						$val = '/*' . $val . ';*/';
-					}
-					else
-					{
-						$val = $val . ';';
-					}
+				$filename = JPATH_THEMES . '/' . $tmplt . '/' . 'css' . '/' . $css;
+				$path = 'templates/' . $tmplt . '/' . 'css';
 
-					$newcontent .= $val;
-				}
-
-				JFile::write($dest, $newcontent);
-				JFile::write($destchild, $newcontent);
+				$this->processCSS(rtrim($css, '.css'), $path, $replace_, $filename);
 			}
 		}
 
@@ -456,40 +447,29 @@ class PlgSystemAglocalgooglefonts extends JPlugin
 		{
 			preg_match('/\/bootstrap(.*?)\.css/', $match, $css);
 			$css = str_replace('/', '', $css[0]);
-			$replace = str_replace($css, 'disable_google_font_bootstrap.css', $match);
-			$text = str_replace($match, $replace, $text);
 
-			$filename = JPATH_THEMES . '/' . $tmplt . '/' . 'css' . '/' . $css;
-
-			if (file_exists($filename))
+			if (!empty($css))
 			{
-				$dest = JPATH_THEMES . '/' . $tmplt . '/' . 'css' . '/' . 'disable_google_font_bootstrap.css';
-				$content = explode(';', JFILE::read($filename));
-				$newcontent = '';
+				$replace = str_replace($css, 'disable_google_font_bootstrap.css', $match);
+				$text = str_replace($match, $replace, $text);
 
-				foreach ($content as $val)
-				{
-					if (preg_match('/@import(.*)fonts\.googleapis\.com(.*)/', $val))
-					{
-						$val = '/*' . $val . ';*/
-						';
-					}
-					else
-					{
-						$val = $val . ';';
-					}
+				$filename = JPATH_THEMES . '/' . $tmplt . '/' . 'css' . '/' . $css;
+				$path = 'templates/' . $tmplt . '/' . 'css';
 
-					$newcontent .= $val;
-				}
-
-				JFile::write($dest, $newcontent);
+				$this->processCSS(rtrim($css, '.css'), $path, $replace_, $filename);
 			}
 		}
 
 		return $text;
 	}
 
-	public function disable_custommode_css($text, $custompath)
+	/**
+	 * Disable CDN file and return the new text
+	 *
+	 * @param string|array  $text
+	 * @param string|null   $custompath
+	 */
+	public function disable_custommode_css($text, $custompath, $replace)
 	{
 		foreach ($custompath as $obj)
 		{
@@ -497,53 +477,78 @@ class PlgSystemAglocalgooglefonts extends JPlugin
 			{
 				$path = ltrim(rtrim($obj->path, '/'), '/');
 				$file = ltrim($obj->file, '/');
-				$replacehref = 'templates/' . $path . '/' . $file . '.css';
-				$replace = 'templates/' . $path . '/disable_google_font_' . $file . '.css';
-				$text = str_replace($replacehref, $replace, $text);
+				$replacehref = $path . '/' . $file . '.css';
+				$replacefile = $path . '/disable_google_font_' . $file . '.css';
+				$text = str_replace($replacehref, $replacefile, $text);
 
-				$filename = JPATH_BASE . '/' . $path . '/' . $file . '.css';
+				$fullfilename = JPATH_BASE . '/' . $path . '/' . $file . '.css';
 
-				if (file_exists($filename))
-				{
-					$dest = JPATH_BASE . '/' . $path . '/disable_google_font_' . $file . '.css';
-					$content = explode(';', JFILE::read($filename));
-					$newcontent = '';
-
-					foreach ($content as $val)
-					{
-						// Todo zweite zeile nur if replace
-						preg_match_all('/@import url\(["{1}|\'{1}](.*)fonts\.googleapis\.com(.*)\)(;?)/', $val, $matches);
-
-						foreach ($matches[0] as $matchIndex => $match)
-						{
-							$this->fonts[] = $matches[1][$matchIndex] . 'fonts.googleapis.com' . $matches[2][$matchIndex];
-						}
-
-						$match = preg_match('/@import(.*)fonts\.googleapis\.com(.*)/', $val);
-
-						if ($match)
-						{
-							$val = '/*' . $val . ';*/';
-						}
-						else
-						{
-							$val = $val . ';';
-						}
-
-						$newcontent .= $val;
-					}
-
-					JFile::write($dest, $newcontent);
-				}
+				$this->processCSS($file, $path, $replace, $fullfilename);
 			}
 		}
 
 		return $text;
 	}
 
-	public function disable_custommode_cdn($text, $custompath)
+	/**
+	 * Process CSS file
+	 *
+	 * @param string  $file
+	 * @param string  $path
+	 * @param string  $replace
+	 */
+	public function processCSS($file, $path, $replace, $fullfilename)
 	{
-		// Todo im Moment nur Skript dies noch für css und png? erweitern
+		if (file_exists($fullfilename))
+		{
+			$dest = JPATH_BASE . '/' . $path . '/disable_google_font_' . $file . '.css';
+			$content = explode(';', JFILE::read($fullfilename));
+			$newcontent = '';
+
+			foreach ($content as $val)
+			{
+				preg_match_all('/@import url\(["{1}|\'{1}](.*)fonts\.googleapis\.com(.*)\)(;?)/', $val, $matches_url);
+				preg_match_all('/@import ["{1}|\'{1}](.*)fonts\.googleapis\.com(.*)(;?)/', $val, $matches);
+
+				if ($replace == 1)
+				{
+					foreach ($matches[0] as $matchIndex => $match)
+					{
+						$this->fonts[] = $matches[1][$matchIndex] . 'fonts.googleapis.com' . $matches[2][$matchIndex];
+					}
+
+					foreach ($matches_url[0] as $matchIndex => $match)
+					{
+						$this->fonts[] = $matches[1][$matchIndex] . 'fonts.googleapis.com' . $matches[2][$matchIndex];
+					}
+				}
+
+				$match = preg_match('/@import(.*)fonts\.googleapis\.com(.*)/', $val);
+
+				if ($match)
+				{
+					$val = '/*' . $val . ';*/';
+				}
+				else
+				{
+					$val = $val . ';';
+				}
+
+				$newcontent .= $val;
+			}
+
+			JFile::write($dest, $newcontent);
+		}
+	}
+
+	/**
+	 * Disable CSS file and return the new text
+	 *
+	 * @param string|array  $text
+	 * @param string|null   $custompath
+	 */
+	public function disable_custommode_cdn($text, $custompath, $replace)
+	{
 		foreach ($custompath as $obj)
 		{
 			if ($obj->path != '')
@@ -551,11 +556,14 @@ class PlgSystemAglocalgooglefonts extends JPlugin
 				$suchwort = str_replace('.', '\.', str_replace('/', '\/', $obj->path));
 				preg_match_all('/<script(.*?)' . $suchwort . '(.*?)script>/', $text, $matches);
 
-				// Todo zweite zeile nur if replace
 				foreach ($matches[0] as $matchIndex => $match)
 				{
 					$text = str_replace($match, '<!--removed cdn -->', $text);
-					$this->cdns[] = $obj->path;
+
+					if ($replace == 1)
+					{
+						$this->cdns[] = $obj->path;
+					}
 				}
 			}
 		}
