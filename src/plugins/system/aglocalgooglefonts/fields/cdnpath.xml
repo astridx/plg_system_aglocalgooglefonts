@@ -7,8 +7,8 @@
 		<field name="path"
 			type="cpath"
 			default=""
-			label="PLG_SYSTEM_JMGDISABLEGOOGLEFONT_PATH"
-			description="PLG_SYSTEM_JMGDISABLEGOOGLEFONT_PATH_DESC"
+			label="PLG_SYSTEM_AGLOCALGOOGLEFONTS_PATH"
+			description="PLG_SYSTEM_AGLOCALGOOGLEFONTS_PATH_DESC"
 			filter="string"
 		/>
 	</fieldset>

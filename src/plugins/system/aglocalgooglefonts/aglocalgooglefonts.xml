@@ -24,20 +24,28 @@
 				<field 
 					name="modus_dr" 
 					type="radio"
-					description="PLG_SYSTEM_AGLOCALGOOGLEFONTS_MODUS"
-					label="PLG_SYSTEM_AGLOCALGOOGLEFONTS_MODUS"
+					description="PLG_SYSTEM_AGLOCALGOOGLEFONTS_MODUS_DR"
+					label="PLG_SYSTEM_AGLOCALGOOGLEFONTS_MODUS_DR"
 					default="0" 
 					class="btn-group"
 				>
-					<option value="0">disble</option>
+					<option value="0">DISABLE</option>
 					<option value="1">replace</option>
 				</field>
 
 				<field 
+					name="note2" 
+					type="note" 
+					label="PLG_SYSTEM_AGLOCALGOOGLEFONTS_NOTE_MODUS_AC" 
+					description="PLG_SYSTEM_AGLOCALGOOGLEFONTS_NOTE_MODUS_AC_DESC" 
+					class="alert" 
+					close="true"
+				/>
+				<field 
 					name="modus_ac" 
 					type="radio"
-					description="PLG_SYSTEM_AGLOCALGOOGLEFONTS_MODUS"
-					label="PLG_SYSTEM_AGLOCALGOOGLEFONTS_MODUS"
+					description="PLG_SYSTEM_AGLOCALGOOGLEFONTS_MODUS_AC"
+					label="PLG_SYSTEM_AGLOCALGOOGLEFONTS_MODUS_AC"
 					default="0" 
 					class="btn-group"
 				>

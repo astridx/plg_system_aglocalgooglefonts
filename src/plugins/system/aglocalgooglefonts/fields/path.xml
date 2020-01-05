@@ -7,15 +7,13 @@
 		<field name="path"
 			type="path"
 			default=""
-			label="PLG_SYSTEM_JMGDISABLEGOOGLEFONT_PATH"
-			description="PLG_SYSTEM_JMGDISABLEGOOGLEFONT_PATH_DESC"
+			label="PLG_SYSTEM_AGLOCALGOOGLEFONTS_PATH"
 			filter="string"
 		/>
 		<field name="file"
 			type="text"
 			default=""
-			label="PLG_SYSTEM_JMGDISABLEGOOGLEFONT_FILE"
-			description="PLG_SYSTEM_JMGDISABLEGOOGLEFONT_FILE_DESC"
+			label="PLG_SYSTEM_AGLOCALGOOGLEFONTS_FILE"
 			filter="string"
 		/>
 	</fieldset>
