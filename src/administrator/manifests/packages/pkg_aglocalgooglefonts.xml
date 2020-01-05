@@ -23,6 +23,6 @@
 	</languages>
 	<updateservers>
 		<!-- Note: No spaces or linebreaks allowed between the server tags -->
-		<server type="extension" name="LocalGoogleFonts Update Site">https://raw.githubusercontent.com/astridx/pkg_aglocalgooglefonts/master/aglocalgooglefonts-update.xml</server>
+		<server type="extension" name="LocalGoogleFonts Update Site">https://raw.githubusercontent.com/astridx/plg_system_aglocalgooglefonts/master/aglocalgooglefonts-update.xml</server>
 	</updateservers>
 </extension>
