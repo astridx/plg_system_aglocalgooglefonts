@@ -23,11 +23,11 @@ in der die link -Tags auskommentiert werden.
 
 In den CSS-Dateien wird 
 
-@import 'https://fonts.googleapis.com/css?family=Playfair+Display:700,400,400italic';
+```@import 'https://fonts.googleapis.com/css?family=Playfair+Display:700,400,400italic';```
 
 zu
 
-/*@import 'https://fonts.googleapis.com/css?family=Playfair+Display:700,400,400italic';*/
+```/*@import 'https://fonts.googleapis.com/css?family=Playfair+Display:700,400,400italic';*/```
 
 Diese Datei, wird dann anstelle der ursprünglichen Datei geladen.  
 
@@ -52,20 +52,21 @@ Ist die Funktion ersetzen aktiviert, wird die deaktiviert Sprache von Google her
 Beispiel:  
 Wird eine Schrift mit der URL  
 
-https://fonts.googleapis.com/css?family=Playfair+Display:700,400,400italic
+`https://fonts.googleapis.com/css?family=Playfair+Display:700,400,400italic`
 
 importiert, dann wird die Schrift 
 
-https://fonts.google.com/specimen/Playfair+Display
+`https://fonts.google.com/specimen/Playfair+Display`
 
 ins Verzeichnis 
 
-/plugins/system/plg_system_aglocalgooglefonts/src/plugins/system/aglocalgooglefonts/fonts
+`/plugins/system/plg_system_aglocalgooglefonts/src/plugins/system/aglocalgooglefonts/fonts`
 
 kopiert.
 
 Außerdem wird im Verzeichnis eine CSS Datei mit dem Inhalt
 
+```
 @font-face {
 	font-family: "Playfair Display";
 	font-weight: 700;
@@ -78,10 +79,10 @@ Außerdem wird im Verzeichnis eine CSS Datei mit dem Inhalt
 	font-style: normal;
 	src: url(http://localhost/jgering/plugins/system/aglocalgooglefonts/fonts/nuFiD-vYSZviVYUb_rj3ij__anPXDTzYgEM86xQ.woff2) format('woff2'), url(http://localhost/jgering/plugins/system/aglocalgooglefonts/fonts/nuFiD-vYSZviVYUb_rj3ij__anPXDTzYhg.woff) format('woff');
 }
-
+```
 angelegt.  
 Diese Datei wird unmittelbar nach dem öffnenden head-Tag im HTML eingebunden:  
 
-<link href="/plugins/system/aglocalgooglefonts/css/font-7bc9d3f413ab8bdac41b2dfd06547ef4.css" rel="stylesheet" />
+`<link href="/plugins/system/aglocalgooglefonts/css/font-7bc9d3f413ab8bdac41b2dfd06547ef4.css" rel="stylesheet" />`
 
 
