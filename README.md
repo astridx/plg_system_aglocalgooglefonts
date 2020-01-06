@@ -14,12 +14,12 @@
 
 (Anwendbar bei Template von YOOtheme)  
 
-Sucht im HTML-Quelltext nach link-tags für eine CSS-Datei mit dem Namen 
+Sucht im HTML-Quelltext nach `<link>`-Tags für eine CSS-Datei mit dem Namen 
 - theme.css und 
 - bootstrap.css und ändert den Tag.  
 
 Wenn eine solche Datei gefunden wird, dann wird eine Kopie davon gespeichert, 
-in der die link -Tags auskommentiert werden.
+in der die `<link> -Tags auskommentiert werden.
 
 In den CSS-Dateien wird 
 
@@ -81,7 +81,7 @@ Außerdem wird im Verzeichnis eine CSS Datei mit dem Inhalt
 }
 ```
 angelegt.  
-Diese Datei wird unmittelbar nach dem öffnenden head-Tag im HTML eingebunden:  
+Diese Datei wird unmittelbar nach dem öffnenden `<head>`-Tag im HTML eingebunden:  
 
 `<link href="/plugins/system/aglocalgooglefonts/css/font-7bc9d3f413ab8bdac41b2dfd06547ef4.css" rel="stylesheet" />`
 
