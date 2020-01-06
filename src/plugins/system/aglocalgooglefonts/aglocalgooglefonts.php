@@ -18,6 +18,7 @@ jimport('joomla.plugin.plugin');
  */
 class PlgSystemAglocalgooglefonts extends JPlugin
 {
+
 	/**
 	 * Google Fonts Json String.
 	 *
@@ -129,16 +130,14 @@ class PlgSystemAglocalgooglefonts extends JPlugin
 
 		if ($replace == 1)
 		{
-			foreach ($this->fonts as $font)
-			{
+			foreach ($this->fonts as $font) {
 				$localcssfile = $this->process_fonts_url($font);
 				$localcsspath = JURI::root() . 'plugins/system/aglocalgooglefonts/css/';
 				$string_to_insert = '<link href="' . $localcsspath . $localcssfile . '" rel="stylesheet" />';
 				$body = str_replace('<head>', '<head>' . $string_to_insert, $body);
 			}
 
-			foreach ($this->cdns as $cdn)
-			{
+			foreach ($this->cdns as $cdn) {
 				// Todo bisher nur js und async oder defer einfügen
 				$localcdnfile = $this->process_cdns_url($cdn);
 				$localcdnpath = JURI::root() . 'plugins/system/aglocalgooglefonts/cdns/';
@@ -242,8 +241,7 @@ class PlgSystemAglocalgooglefonts extends JPlugin
 		 */
 		$json = $this->get_fonts_json();
 
-		foreach ($families as $font)
-		{
+		foreach ($families as $font) {
 			$font_obj = new GoogleFont($font['name'], $json[$font['name']]);
 
 			// Generate the CSS for this family
@@ -299,8 +297,7 @@ class PlgSystemAglocalgooglefonts extends JPlugin
 		if (!is_array($query))
 		{
 			parse_str($query, $parsed);
-		}
-		else
+		} else
 		{
 			$parsed = $query;
 		}
@@ -318,16 +315,14 @@ class PlgSystemAglocalgooglefonts extends JPlugin
 		/**
 		 * Parse variants/weights and font names
 		 */
-		foreach ($families as $k => $font)
-		{
+		foreach ($families as $k => $font) {
 			$font_query = explode(':', $font);
 			$font_name = rtrim(trim($font_query[0]), "'");
 
 			if (empty($font_query[1]))
 			{
 				$variants = array(400);
-			}
-			else
+			} else
 			{
 				$variants = explode(',', $font_query[1]);
 			}
@@ -400,8 +395,7 @@ class PlgSystemAglocalgooglefonts extends JPlugin
 	{
 		preg_match_all('/<link[^>]*href=["{1}|\'{1}](.*?)fonts\.google(.*?)["{1}|\'{1}][^>]*>/', $text, $matches);
 
-		foreach ($matches[0] as $matchIndex => $match)
-		{
+		foreach ($matches[0] as $matchIndex => $match) {
 			$text = str_replace($match, '<!--removed google font-->', $text);
 
 			if ($replace == 1)
@@ -412,8 +406,7 @@ class PlgSystemAglocalgooglefonts extends JPlugin
 
 		preg_match_all('/<script.*src=["{1}|\'{1}](.*)googleapis\.com(.*)webfont\.js(.*)["{1}|\'{1}].*><\/script>/', $text, $matches);
 
-		foreach ($matches[0] as $matchIndex => $match)
-		{
+		foreach ($matches[0] as $matchIndex => $match) {
 			$text = str_replace($match, '<!--removed google font-->', $text);
 
 			if ($replace == 1)
@@ -424,8 +417,7 @@ class PlgSystemAglocalgooglefonts extends JPlugin
 
 		preg_match_all('/@import url\(["{1}|\'{1}](.*)fonts\.googleapis\.com(.*)\)(;?)/', $text, $matches);
 
-		foreach ($matches[0] as $matchIndex => $match)
-		{
+		foreach ($matches[0] as $matchIndex => $match) {
 			$text = str_replace($match, '/*removed google font*/', $text);
 
 			if ($replace == 1)
@@ -446,10 +438,12 @@ class PlgSystemAglocalgooglefonts extends JPlugin
 	 */
 	public function disable_autotheme_css($text, $tmplt, $replace_)
 	{
+		// Mainly Yoo Theme 
+		// <link rel="stylesheet" href="/templates/yoo_sixthavenue/css/theme.css">
+
 		preg_match_all('/<link[^>]*href=["{1}|\'{1}](.*?)templates\/' . $tmplt . '(.*)theme(.*)\.css(.*?)["{1}|\'{1}][^>]*>/', $text, $matches);
 
-		foreach ($matches[0] as $matchIndex => $match)
-		{
+		foreach ($matches[0] as $matchIndex => $match) {
 			preg_match('/\/theme(.*?)\.css/', $match, $css);
 
 			if (!empty($css))
@@ -467,8 +461,7 @@ class PlgSystemAglocalgooglefonts extends JPlugin
 
 		preg_match_all('/<link[^>]*href=["{1}|\'{1}](.*?)templates\/' . $tmplt . '(.*)bootstrap(.*)\.css(.*?)["{1}|\'{1}][^>]*>/', $text, $matches);
 
-		foreach ($matches[0] as $matchIndex => $match)
-		{
+		foreach ($matches[0] as $matchIndex => $match) {
 			preg_match('/\/bootstrap(.*?)\.css/', $match, $css);
 			$css = str_replace('/', '', $css[0]);
 
@@ -476,6 +469,47 @@ class PlgSystemAglocalgooglefonts extends JPlugin
 			{
 				$replace = str_replace($css, 'disable_google_font_bootstrap.css', $match);
 				$text = str_replace($match, $replace, $text);
+
+				$filename = JPATH_THEMES . '/' . $tmplt . '/' . 'css' . '/' . $css;
+				$path = 'templates/' . $tmplt . '/' . 'css';
+
+				$this->processCSS(rtrim($css, '.css'), $path, $replace_, $filename);
+			}
+		}
+
+		// Mainly JoomlaPlate 
+		// <style data-file="bootstrap.css"></style>
+		
+		preg_match_all('/<style[^>](.*)theme(.*)\.css(.*?)["{1}|\'{1}][^>]*>/', $text, $matches);
+
+		foreach ($matches[0] as $matchIndex => $match) {
+			preg_match('/theme(.*?)\.css/', $match, $css);
+
+			if (!empty($css))
+			{
+				$css = str_replace('/', '', $css[0]);
+				$replace = str_replace($css, 'disable_google_font_' . $css, $match);
+				$styletag = '<link rel="stylesheet" href="' . JURI::base() . 'templates/' . $tmplt . '/css/disable_google_font_' . $css . '">';
+				$text = str_replace($match, $styletag . $replace, $text);
+
+				$filename = JPATH_THEMES . '/' . $tmplt . '/' . 'css' . '/' . $css;
+				$path = 'templates/' . $tmplt . '/' . 'css';
+
+				$this->processCSS(rtrim($css, '.css'), $path, $replace_, $filename);
+			}
+		}
+
+		preg_match_all('/<style[^>](.*)bootstrap(.*)\.css(.*?)["{1}|\'{1}][^>]*>/', $text, $matches);
+
+		foreach ($matches[0] as $matchIndex => $match) {
+			preg_match('/bootstrap(.*?)\.css/', $match, $css);
+
+			if (!empty($css))
+			{
+				$css = str_replace('/', '', $css[0]);
+				$replace = str_replace($css, 'disable_google_font_' . $css, $match);
+				$styletag = '<link rel="stylesheet" href="' . JURI::base() . 'templates/' . $tmplt . '/css/disable_google_font_' . $css . '">';
+				$text = str_replace($match, $styletag . $replace, $text);
 
 				$filename = JPATH_THEMES . '/' . $tmplt . '/' . 'css' . '/' . $css;
 				$path = 'templates/' . $tmplt . '/' . 'css';
@@ -495,8 +529,7 @@ class PlgSystemAglocalgooglefonts extends JPlugin
 	 */
 	public function disable_custommode_css($text, $custompath, $replace)
 	{
-		foreach ($custompath as $obj)
-		{
+		foreach ($custompath as $obj) {
 			if ($obj->path != '' && $obj->file != '')
 			{
 				$path = ltrim(rtrim($obj->path, '/'), '/');
@@ -514,35 +547,28 @@ class PlgSystemAglocalgooglefonts extends JPlugin
 		return $text;
 	}
 
-	/**
-	 * Process CSS file
-	 *
-	 * @param string  $file
-	 * @param string  $path
-	 * @param string  $replace
-	 */
 	public function processCSS($file, $path, $replace, $fullfilename)
 	{
 		if (file_exists($fullfilename))
 		{
 			$dest = JPATH_BASE . '/' . $path . '/disable_google_font_' . $file . '.css';
-			$content = explode(';', JFILE::read($fullfilename));
+			$content = JFILE::read($fullfilename);
+			//$content = preg_replace('/START[\s\S]+?END/', '', $string);
+			$content = preg_replace('/\/\*[\s\S]+?\*\//', '', $content);
+			$content = explode(';', $content);
 			$newcontent = '';
 
-			foreach ($content as $val)
-			{
+			foreach ($content as $val) {
 				preg_match_all('/@import url\(["{1}|\'{1}](.*)fonts\.googleapis\.com(.*)\)(;?)/', $val, $matches_url);
 				preg_match_all('/@import ["{1}|\'{1}](.*)fonts\.googleapis\.com(.*)(;?)/', $val, $matches);
 
 				if ($replace == 1)
 				{
-					foreach ($matches[0] as $matchIndex => $match)
-					{
+					foreach ($matches[0] as $matchIndex => $match) {
 						$this->fonts[] = $matches[1][$matchIndex] . 'fonts.googleapis.com' . $matches[2][$matchIndex];
 					}
 
-					foreach ($matches_url[0] as $matchIndex => $match)
-					{
+					foreach ($matches_url[0] as $matchIndex => $match) {
 						$this->fonts[] = $matches[1][$matchIndex] . 'fonts.googleapis.com' . $matches[2][$matchIndex];
 					}
 				}
@@ -552,8 +578,7 @@ class PlgSystemAglocalgooglefonts extends JPlugin
 				if ($match)
 				{
 					$val = '/*' . $val . ';*/';
-				}
-				else
+				} else
 				{
 					$val = $val . ';';
 				}
@@ -573,15 +598,13 @@ class PlgSystemAglocalgooglefonts extends JPlugin
 	 */
 	public function disable_custommode_cdn($text, $custompath, $replace)
 	{
-		foreach ($custompath as $obj)
-		{
+		foreach ($custompath as $obj) {
 			if ($obj->path != '')
 			{
 				$suchwort = str_replace('.', '\.', str_replace('/', '\/', $obj->path));
 				preg_match_all('/<script(.*?)' . $suchwort . '(.*?)script>/', $text, $matches);
 
-				foreach ($matches[0] as $matchIndex => $match)
-				{
+				foreach ($matches[0] as $matchIndex => $match) {
 					$text = str_replace($match, '<!--removed cdn -->', $text);
 
 					if ($replace == 1)
