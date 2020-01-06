@@ -35,11 +35,11 @@ Beispiel:
 
 Der Tag 
 
-<link rel="stylesheet" href="templates/mytemplate/css/theme.css">
+```<link rel="stylesheet" href="templates/mytemplate/css/theme.css">```
 
 wird zu
 
-<link rel="stylesheet" href="templates/mytemplate/css/disable_google_font_theme.css">
+```<link rel="stylesheet" href="templates/mytemplate/css/disable_google_font_theme.css">```
 
 #### benutzerdefiniert
 
