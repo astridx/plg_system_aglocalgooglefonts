@@ -1033,7 +1033,7 @@
 					<option value="0">No</option>
 				</field>
 
-				<field name="default_logo" type="imagelist" default="logo.png" label="TPL_FAV_DEFAULT_LOGO_LABEL" description="TPL_FAV_DEFAULT_LOGO_DESC" directory="/templates/favourite/images/logo" hide_default="no" exclude="" stripext="" />
+				<field name="default_logo" type="imagelist" default="logo.png" label="TPL_FAV_DEFAULT_LOGO_LABEL" description="TPL_FAV_DEFAULT_LOGO_DESC" directory="/media/templates/site/favourite/images/logo" hide_default="no" exclude="" stripext="" />
 
 				<field name="default_logo_img_alt" type="text" size="10" default="Favourite template" label="TPL_FAV_DEFAULT_LOGO_IMG_ALT_LABEL" description="TPL_FAV_DEFAULT_LOGO_IMG_ALT_DESC"></field>
 
