@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="plugin" version="3.7" group="system" method="upgrade">
+    <name>agscsscompiler</name>
+	<author>Astrid Günther</author>
+	<creationDate>##DATE##</creationDate>
+	<copyright>(C) ##YEAR## Astrid Günther. All rights reserved.</copyright>
+	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
+	<authorEmail>info@astrid-guenther.de</authorEmail>
+	<authorUrl>www.astrid-guenther.de</authorUrl>
+	<version>##VERSION##</version>
+    <description>PLG_SYSTEM_AGSCSSCOMPILER_XML_DESC</description>
+    <files>
+        <filename plugin="agscsscompiler">agscsscompiler.php</filename>
+        <folder>scssphp</folder>
+        <folder>language</folder>
+    </files>
+
+    <config>
+        <fields name="params">
+            <fieldset name="basic">
+                <field
+                    name="msg_ok"
+                    type="radio"
+                    class="btn-group switcher"
+                    default="1"
+                    label="PLG_SYSTEM_AGSCSSCOMPILER_MSGOK_LABEL"
+                    description="PLG_SYSTEM_AGSCSSCOMPILER_MSGOK_DESC"
+                >
+                    <option value="0">JNo</option>
+                    <option value="1">JYES</option>
+                </field>
+
+				<field
+                    name="force_compile"
+                    type="radio"
+                    class="btn-group switcher"
+                    default="0"
+                    label="PLG_SYSTEM_AGSCSSCOMPILER_FORCE_LABEL"
+                    description="PLG_SYSTEM_AGSCSSCOMPILER_FORCE_DESC"
+                >
+                    <option value="0">JNo</option>
+                    <option value="1">JYES</option>
+                </field>
+
+				<field
+                    name="scss_compress"
+                    type="list"
+                    description="PLG_SYSTEM_AGSCSSCOMPILER_COMPRESSION_DESC"
+                    label="PLG_SYSTEM_AGSCSSCOMPILER_COMPRESSION_LABEL"
+                    default="Nested"
+                >
+                    <option value="Expanded">PLG_SYSTEM_AGSCSSCOMPILER_COMPRESSION_EXPANDED</option>
+                    <option value="Nested">PLG_SYSTEM_AGSCSSCOMPILER_COMPRESSION_NESTED</option>
+                    <option value="Compressed">PLG_SYSTEM_AGSCSSCOMPILER_COMPRESSION_COMPRESSED</option>
+                    <option value="Compact">PLG_SYSTEM_AGSCSSCOMPILER_COMPRESSION_COMPACT</option>
+                    <option value="Crunched">PLG_SYSTEM_AGSCSSCOMPILER_COMPRESSION_CRUNCHED</option>
+                </field>
+
+				<field
+					name="folders"
+					type="subform"
+					multiple="true"
+					layout="joomla.form.field.subform.repeatable-table"
+					label="PLG_SYSTEM_AGSCSSCOMPILER_FOLDERS_LABEL"
+					description="PLG_SYSTEM_AGSCSSCOMPILER_FOLDERS_DESC"
+				>
+					<form>
+						<field
+							name="scss_folder"
+							type="text"
+							filter="string"
+							description="PLG_SYSTEM_AGSCSSCOMPILER_SCSSFOLDER_DESC"
+							label="PLG_SYSTEM_AGSCSSCOMPILER_SCSSFOLDER_LABEL"
+							default="templates/cassiopeia/scss"
+						/>
+						<field
+							name="css_folder"
+							type="text"
+							filter="string"
+							description="PLG_SYSTEM_AGSCSSCOMPILER_CSSFOLDER_DESC"
+							label="PLG_SYSTEM_AGSCSSCOMPILER_CSSFOLDER_LABEL"
+							default="templates/cassiopeia/css"
+						/>
+					</form>
+				</field>
+
+				<field
+					name="excludedfiles"
+					type="subform"
+					multiple="true"
+					layout="joomla.form.field.subform.repeatable-table"
+					label="PLG_SYSTEM_AGSCSSCOMPILER_EXCLUDEDFILES_LABEL"
+					description="PLG_SYSTEM_AGSCSSCOMPILER_EXCLUDEDFILES_DESC"
+				>
+					<form>
+						<field
+							name="excludedfile"
+							type="text"
+							filter="string"
+							description="PLG_SYSTEM_AGSCSSCOMPILER_EXCLUDEDFILE_DESC"
+							label="PLG_SYSTEM_AGSCSSCOMPILER_EXCLUDEDFILE_LABEL"
+							default="templates/cassiopeia/scss/template.scss"
+						/>
+					</form>
+				</field>
+			</fieldset>
+        </fields>
+    </config>
+
+</extension>

@@ -1,0 +1,10 @@
+<changelogs>
+	<changelog>
+		<element>plg_system_aglocalgooglefonts</element>
+		<type>package</type>
+		<version>4.0.0</version>
+		<note>
+			<item>Initial Version</item>
+		</note>
+	</changelog>
+</changelogs>

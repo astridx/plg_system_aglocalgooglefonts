@@ -1,0 +1,9 @@
+{
+  "$schema": "https://developer.joomla.org/schemas/json-schema/web_assets.json",
+  "name": "favourite",
+  "version": "4.0.0",
+  "description": "This file contains details of the assets used by Favourite, a Joomla 4 site template.",
+  "license": "GPL-2.0-or-later",
+  "assets": [
+  ]
+}
