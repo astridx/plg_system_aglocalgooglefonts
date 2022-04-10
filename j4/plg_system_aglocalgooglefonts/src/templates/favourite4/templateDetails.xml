@@ -11,8 +11,13 @@
 	<description>TPL_FAV_DESC</description>
 	<inheritable>1</inheritable>
 
-	<media destination="templates/site/favourite" folder="media/templates/site/favourite">
-		##MEDIA_FILES##
+	<media destination="templates/site/favourite4" folder="media">
+		<folder>admin</folder>
+		<folder>bootstrap</folder>
+		<folder>css</folder>
+		<folder>images</folder>
+		<folder>js</folder>
+		<folder>media</folder>
 	</media>
 
 	<files>
@@ -22,6 +27,7 @@
 		<filename>error.php</filename>
 		<filename>templateDetails.xml</filename>
 		<folder>html</folder>
+		<folder>media</folder>
 		<folder>language</folder>
 	</files>
 
