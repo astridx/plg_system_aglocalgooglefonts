@@ -41,7 +41,7 @@ class PlgSystemAglocalgooglefonts extends JPlugin
 	 * @var    jsonstring
 	 * @since  1.0.0
 	 */
-	protected $fonts = array();
+	protected $fonts = [];
 
 	/**
 	 * Fonts to load local.
@@ -49,7 +49,7 @@ class PlgSystemAglocalgooglefonts extends JPlugin
 	 * @var    jsonstring
 	 * @since  1.0.0
 	 */
-	protected $cdns = array();
+	protected $cdns = [];
 
 	/**
 	 * CDNs to load local.
@@ -100,8 +100,7 @@ class PlgSystemAglocalgooglefonts extends JPlugin
 
 	public function onAfterRender()
 	{
-		if ($this->app->isSite() == false)
-		{
+		if ($this->app->isSite() == false) {
 			return;
 		}
 
@@ -112,8 +111,7 @@ class PlgSystemAglocalgooglefonts extends JPlugin
 		$replace = $this->params->get('modus_dr', 0);
 
 		// Custom
-		if ($this->params->get('modus_ac', 0) == 1 || $this->params->get('modus_ac', 2))
-		{
+		if ($this->params->get('modus_ac', 0) == 1 || $this->params->get('modus_ac', 2)) {
 			$custompath = $this->params->get('addcssfiles');
 			$body = $this->disable_custommode_css($body, $custompath, $replace);
 			$customcdnpath = $this->params->get('addcdnfiles');
@@ -121,15 +119,13 @@ class PlgSystemAglocalgooglefonts extends JPlugin
 		}
 
 		// Auto
-		if ($this->params->get('modus_ac', 0) == 0 || $this->params->get('modus_ac', 2))
-		{
+		if ($this->params->get('modus_ac', 0) == 0 || $this->params->get('modus_ac', 2)) {
 			$body = $this->disable_autotheme_css($body, $template, $replace);
 		}
 
 		$body = $this->disable($body, $replace);
 
-		if ($replace == 1)
-		{
+		if ($replace == 1) {
 			foreach ($this->fonts as $font) {
 				$localcssfile = $this->process_fonts_url($font);
 				$localcsspath = JURI::root() . 'plugins/system/aglocalgooglefonts/css/';
@@ -160,14 +156,14 @@ class PlgSystemAglocalgooglefonts extends JPlugin
 		$css = $this->generate_css($fonts['families'], $fonts['subsets']);
 
 		// Empty? Can't be
-		if (empty($css))
-		{
+		if (empty($css)) {
 			return $url;
 		}
 
 		// Create CSS file
 		$file = $this->create_css_file(
-			implode("\n", $css), 'font-' . md5($url)
+			implode("\n", $css),
+			'font-' . md5($url)
 		);
 
 		return $file;
@@ -184,8 +180,7 @@ class PlgSystemAglocalgooglefonts extends JPlugin
 		$name = $path_parts['filename'] . '.' . $path_parts['extension'];
 		$file = JPATH_PLUGINS . '/system/aglocalgooglefonts/cdns/' . $name;
 
-		if (!file_exists($file))
-		{
+		if (!file_exists($file)) {
 			file_put_contents($file, file_get_contents($url));
 		}
 
@@ -199,10 +194,10 @@ class PlgSystemAglocalgooglefonts extends JPlugin
 	 */
 	public function get_fonts_json()
 	{
-		if (!$this->_json)
-		{
+		if (!$this->_json) {
 			$json = json_decode(
-				file_get_contents($this->fonts_file), true
+				file_get_contents($this->fonts_file),
+				true
 			);
 
 			$this->_json = $json['fonts'];
@@ -233,7 +228,7 @@ class PlgSystemAglocalgooglefonts extends JPlugin
 	 */
 	public function generate_css($families, $subsets)
 	{
-		$css = array();
+		$css = [];
 		require_once dirname(__FILE__) . "/helper/google-font.php";
 
 		/**
@@ -246,7 +241,8 @@ class PlgSystemAglocalgooglefonts extends JPlugin
 
 			// Generate the CSS for this family
 			$css = array_merge(
-				$css, $font_obj->generate_css($font['variants'], $subsets)
+				$css,
+				$font_obj->generate_css($font['variants'], $subsets)
 			);
 		}
 
@@ -267,8 +263,7 @@ class PlgSystemAglocalgooglefonts extends JPlugin
 		);
 
 		// Protocol relative fails with parse_url
-		if (substr($url, 0, 2) == '//')
-		{
+		if (substr($url, 0, 2) == '//') {
 			$url = 'https:' . $url;
 		}
 
@@ -276,7 +271,8 @@ class PlgSystemAglocalgooglefonts extends JPlugin
 		 * Parse URL to determine families and subsets
 		 */
 		$query = parse_url(
-			$url, PHP_URL_QUERY
+			$url,
+			PHP_URL_QUERY
 		);
 
 		return $this->parse_fonts_query($query);
@@ -294,21 +290,18 @@ class PlgSystemAglocalgooglefonts extends JPlugin
 	 */
 	public function parse_fonts_query($query)
 	{
-		if (!is_array($query))
-		{
+		if (!is_array($query)) {
 			parse_str($query, $parsed);
-		} else
-		{
+		} else {
 			$parsed = $query;
 		}
 
 		$parsed = array_map('trim', $parsed);
 		$families = explode('|', $parsed['family']);
 
-		$subsets = array();
+		$subsets = [];
 
-		if (!empty($parsed['subset']))
-		{
+		if (!empty($parsed['subset'])) {
 			$subsets = explode(',', $parsed['subset']);
 		}
 
@@ -319,22 +312,19 @@ class PlgSystemAglocalgooglefonts extends JPlugin
 			$font_query = explode(':', $font);
 			$font_name = rtrim(trim($font_query[0]), "'");
 
-			if (empty($font_query[1]))
-			{
-				$variants = array(400);
-			} else
-			{
+			if (empty($font_query[1])) {
+				$variants = [400];
+			} else {
 				$variants = explode(',', $font_query[1]);
 			}
 
-			$families[$k] = array(
+			$families[$k] = [
 				'name' => $font_name,
 				'variants' => array_map('strtolower', $variants)
-			);
+			];
 
 			// Third chunk - probably a subset here from WF loader
-			if (!empty($font_query[2]))
-			{
+			if (!empty($font_query[2])) {
 				// Split and trim
 				$font_subs = array_map('trim', explode(',', $font_query[2]));
 
@@ -347,15 +337,14 @@ class PlgSystemAglocalgooglefonts extends JPlugin
 		$subsets = array_unique($subsets);
 
 		// At least one subset is required
-		if (empty($subsets))
-		{
-			$subsets = array('latin');
+		if (empty($subsets)) {
+			$subsets = ['latin'];
 		}
 
-		return array(
+		return [
 			'families' => $families,
 			'subsets' => $subsets
-		);
+		];
 	}
 
 	/**
@@ -366,13 +355,11 @@ class PlgSystemAglocalgooglefonts extends JPlugin
 	 */
 	public function create_css_file($css, $name = '')
 	{
-		if (is_array($css))
-		{
+		if (is_array($css)) {
 			$css = implode("\n", $css);
 		}
 
-		if (!$name)
-		{
+		if (!$name) {
 			$name = md5(time() . rand(1, 100000));
 		}
 
@@ -398,8 +385,7 @@ class PlgSystemAglocalgooglefonts extends JPlugin
 		foreach ($matches[0] as $matchIndex => $match) {
 			$text = str_replace($match, '<!--removed google font-->', $text);
 
-			if ($replace == 1)
-			{
+			if ($replace == 1) {
 				$this->fonts[] = $matches[1][$matchIndex] . 'fonts.google' . $matches[2][$matchIndex];
 			}
 		}
@@ -409,8 +395,7 @@ class PlgSystemAglocalgooglefonts extends JPlugin
 		foreach ($matches[0] as $matchIndex => $match) {
 			$text = str_replace($match, '<!--removed google font-->', $text);
 
-			if ($replace == 1)
-			{
+			if ($replace == 1) {
 				$this->fonts[] = $matches[1][$matchIndex] . 'googleapis.com' . $matches[2][$matchIndex];
 			}
 		}
@@ -420,8 +405,7 @@ class PlgSystemAglocalgooglefonts extends JPlugin
 		foreach ($matches[0] as $matchIndex => $match) {
 			$text = str_replace($match, '/*removed google font*/', $text);
 
-			if ($replace == 1)
-			{
+			if ($replace == 1) {
 				$this->fonts[] = $matches[1][$matchIndex] . 'fonts.googleapis.com' . $matches[2][$matchIndex];
 			}
 		}
@@ -438,7 +422,7 @@ class PlgSystemAglocalgooglefonts extends JPlugin
 	 */
 	public function disable_autotheme_css($text, $tmplt, $replace_)
 	{
-		// Mainly Yoo Theme 
+		// Mainly Yoo Theme
 		// <link rel="stylesheet" href="/templates/yoo_sixthavenue/css/theme.css">
 
 		preg_match_all('/<link[^>]*href=["{1}|\'{1}](.*?)templates\/' . $tmplt . '(.*)theme(.*)\.css(.*?)["{1}|\'{1}][^>]*>/', $text, $matches);
@@ -446,8 +430,7 @@ class PlgSystemAglocalgooglefonts extends JPlugin
 		foreach ($matches[0] as $matchIndex => $match) {
 			preg_match('/\/theme(.*?)\.css/', $match, $css);
 
-			if (!empty($css))
-			{
+			if (!empty($css)) {
 				$css = str_replace('/', '', $css[0]);
 				$replace = str_replace($css, 'disable_google_font_' . $css, $match);
 				$text = str_replace($match, $replace, $text);
@@ -465,8 +448,7 @@ class PlgSystemAglocalgooglefonts extends JPlugin
 			preg_match('/\/bootstrap(.*?)\.css/', $match, $css);
 			$css = str_replace('/', '', $css[0]);
 
-			if (!empty($css))
-			{
+			if (!empty($css)) {
 				$replace = str_replace($css, 'disable_google_font_bootstrap.css', $match);
 				$text = str_replace($match, $replace, $text);
 
@@ -477,7 +459,7 @@ class PlgSystemAglocalgooglefonts extends JPlugin
 			}
 		}
 
-		// Mainly JoomlaPlate 
+		// Mainly JoomlaPlate
 		// <style data-file="bootstrap.css"></style>
 		
 		preg_match_all('/<style[^>](.*)theme(.*)\.css(.*?)["{1}|\'{1}][^>]*>/', $text, $matches);
@@ -485,8 +467,7 @@ class PlgSystemAglocalgooglefonts extends JPlugin
 		foreach ($matches[0] as $matchIndex => $match) {
 			preg_match('/theme(.*?)\.css/', $match, $css);
 
-			if (!empty($css))
-			{
+			if (!empty($css)) {
 				$css = str_replace('/', '', $css[0]);
 				$replace = str_replace($css, 'disable_google_font_' . $css, $match);
 				$styletag = '<link rel="stylesheet" href="' . JURI::base() . 'templates/' . $tmplt . '/css/disable_google_font_' . $css . '">';
@@ -504,8 +485,7 @@ class PlgSystemAglocalgooglefonts extends JPlugin
 		foreach ($matches[0] as $matchIndex => $match) {
 			preg_match('/bootstrap(.*?)\.css/', $match, $css);
 
-			if (!empty($css))
-			{
+			if (!empty($css)) {
 				$css = str_replace('/', '', $css[0]);
 				$replace = str_replace($css, 'disable_google_font_' . $css, $match);
 				$styletag = '<link rel="stylesheet" href="' . JURI::base() . 'templates/' . $tmplt . '/css/disable_google_font_' . $css . '">';
@@ -530,8 +510,7 @@ class PlgSystemAglocalgooglefonts extends JPlugin
 	public function disable_custommode_css($text, $custompath, $replace)
 	{
 		foreach ($custompath as $obj) {
-			if ($obj->path != '' && $obj->file != '')
-			{
+			if ($obj->path != '' && $obj->file != '') {
 				$path = ltrim(rtrim($obj->path, '/'), '/');
 				$file = ltrim($obj->file, '/');
 				$replacehref = $path . '/' . $file . '.css';
@@ -549,8 +528,7 @@ class PlgSystemAglocalgooglefonts extends JPlugin
 
 	public function processCSS($file, $path, $replace, $fullfilename)
 	{
-		if (file_exists($fullfilename))
-		{
+		if (file_exists($fullfilename)) {
 			$dest = JPATH_BASE . '/' . $path . '/disable_google_font_' . $file . '.css';
 			$content = JFILE::read($fullfilename);
 			//$content = preg_replace('/START[\s\S]+?END/', '', $string);
@@ -562,8 +540,7 @@ class PlgSystemAglocalgooglefonts extends JPlugin
 				preg_match_all('/@import url\(["{1}|\'{1}](.*)fonts\.googleapis\.com(.*)\)(;?)/', $val, $matches_url);
 				preg_match_all('/@import ["{1}|\'{1}](.*)fonts\.googleapis\.com(.*)(;?)/', $val, $matches);
 
-				if ($replace == 1)
-				{
+				if ($replace == 1) {
 					foreach ($matches[0] as $matchIndex => $match) {
 						$this->fonts[] = $matches[1][$matchIndex] . 'fonts.googleapis.com' . $matches[2][$matchIndex];
 					}
@@ -575,11 +552,9 @@ class PlgSystemAglocalgooglefonts extends JPlugin
 
 				$match = preg_match('/@import(.*)fonts\.googleapis\.com(.*)/', $val);
 
-				if ($match)
-				{
+				if ($match) {
 					$val = '/*' . $val . ';*/';
-				} else
-				{
+				} else {
 					$val = $val . ';';
 				}
 
@@ -599,16 +574,14 @@ class PlgSystemAglocalgooglefonts extends JPlugin
 	public function disable_custommode_cdn($text, $custompath, $replace)
 	{
 		foreach ($custompath as $obj) {
-			if ($obj->path != '')
-			{
+			if ($obj->path != '') {
 				$suchwort = str_replace('.', '\.', str_replace('/', '\/', $obj->path));
 				preg_match_all('/<script(.*?)' . $suchwort . '(.*?)script>/', $text, $matches);
 
 				foreach ($matches[0] as $matchIndex => $match) {
 					$text = str_replace($match, '<!--removed cdn -->', $text);
 
-					if ($replace == 1)
-					{
+					if ($replace == 1) {
 						$this->cdns[] = $obj->path;
 					}
 				}
@@ -617,5 +590,4 @@ class PlgSystemAglocalgooglefonts extends JPlugin
 
 		return $text;
 	}
-
 }

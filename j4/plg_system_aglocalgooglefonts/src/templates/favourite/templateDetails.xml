@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="template" client="site" method="upgrade">
 
-	<name>Favourite</name>
+	<name>favourite4</name>
 	<version>##VERSION##</version>
 	<creationDate>##DATE##</creationDate>
 	<author>FavThemes adapted by Astrid Günther</author>
@@ -22,9 +22,6 @@
 		<filename>offline.php</filename>
 		<filename>error.php</filename>
 		<filename>templateDetails.xml</filename>
-		<filename>apple-touch-icon.png</filename>
-		<filename>favicon.ico</filename>
-		<filename>joomla.asset.json</filename>
 		<folder>html</folder>
 		<folder>language</folder>
 	</files>

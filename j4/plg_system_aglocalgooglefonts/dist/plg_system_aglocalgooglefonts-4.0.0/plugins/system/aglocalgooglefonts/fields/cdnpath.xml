@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form>
+	<fieldset name="box_modal" 
+			  class="box-subform" 
+			  addfieldpath="/plugins/system/aglocalgooglefonts/fields"
+	>
+		<field name="path"
+			type="cpath"
+			default=""
+			label="PLG_SYSTEM_AGLOCALGOOGLEFONTS_PATH"
+			description="PLG_SYSTEM_AGLOCALGOOGLEFONTS_PATH_DESC"
+			filter="string"
+		/>
+	</fieldset>
+</form>

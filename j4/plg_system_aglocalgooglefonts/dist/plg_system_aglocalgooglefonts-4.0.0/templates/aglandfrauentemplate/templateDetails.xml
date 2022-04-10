@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE install PUBLIC "-//Joomla! 2.5//DTD template 1.0//EN" "https://www.joomla.org/xml/dtd/2.5/template-install.dtd">
+<extension version="3.6" type="template" client="site">
+	<name>aglandfrauentemplate</name>
+	<version>4.0.0</version>
+	<creationDate>2022-04-10</creationDate>
+	<author>Astrid Günther</author>
+	<authorEmail>info@astrid-guenther.de</authorEmail>
+	<copyright>Copyright (C) 2005 - 2016 Open Source Matters, Inc. All rights reserved.</copyright>
+	<description>TPL_AGLANDFRAUENTEMPLATE_XML_DESCRIPTION</description>
+	<files>
+		<filename>component.php</filename>
+		<filename>error.php</filename>
+		<filename>offline.php</filename>
+		<filename>favicon.ico</filename>
+		<filename>index.php</filename>
+		<filename>templateDetails.xml</filename>
+		<filename>template_preview.png</filename>
+		<filename>template_thumbnail.png</filename>
+		<folder>css</folder>
+		<folder>html</folder>
+		<folder>images</folder>
+		<folder>img</folder>
+		<folder>js</folder>
+		<folder>language</folder>
+		<folder>less</folder>
+	</files>
+	<positions>
+		<position>navigationspfad</position>
+		<position>debug</position>
+		<position>nav-main</position>
+		<position>nav-top</position>
+		<position>nav-bottom</position>
+		<position>search</position>
+		<position>osm</position>
+		<position>carousel</position>
+		<position>rsslandfrauen</position>
+		<position>angebote</position>
+		<position>aktuelles</position>
+	</positions>
+	<config>
+		<fields name="params">
+			<fieldset name="advanced">
+
+				<field name="sitetitle"  type="text" default=""
+					   label="JGLOBAL_TITLE"
+					   description="JFIELD_ALT_PAGE_TITLE_LABEL"
+					   filter="string" />
+
+				<field name="sitedescription"  
+					   type="text" 
+					   default=""
+					   label="JGLOBAL_DESCRIPTION"
+					   description="JGLOBAL_SUBHEADING_DESC"
+					   filter="string" />
+
+				<field name="googleFont"
+					   type="radio"
+					   class="btn-group btn-group-yesno"
+					   default="1"
+					   label="TPL_AGLANDFRAUENTEMPLATE_FONT_LABEL"
+					   description="TPL_AGLANDFRAUENTEMPLATE_FONT_DESC"
+				>
+					<option value="1">JYES</option>
+					<option value="0">JNO</option>
+				</field>
+
+				<field name="googleFontName" 
+					   class="" 
+					   type="text" 
+					   default="Open+Sans"
+					   label="TPL_AGLANDFRAUENTEMPLATE_FONT_NAME_LABEL"
+					   description="TPL_AGLANDFRAUENTEMPLATE_FONT_NAME_DESC" 
+					   showon="googleFont:1" 
+				/>
+
+
+
+
+
+				<field name="showContentOnFrontpage"
+					   type="radio"
+					   class="btn-group btn-group-yesno"
+					   default="1"
+					   label="TPL_AGLANDFRAUENTEMPLATE_FRONTPAGE_LABEL"
+					   description="TPL_AGLANDFRAUENTEMPLATE_FRONTPAGE_DESC"
+				>
+					<option value="1">JYES</option>
+					<option value="0">JNO</option>
+				</field>
+
+				<field name="fluidContainer"
+					   type="radio"
+					   class="btn-group btn-group-yesno"
+					   default="0"
+					   label="TPL_AGLANDFRAUENTEMPLATE_FLUID_LABEL"
+					   description="TPL_AGLANDFRAUENTEMPLATE_FLUID_DESC"
+				>
+					<option value="1">TPL_AGLANDFRAUENTEMPLATE_FLUID</option>
+					<option value="0">TPL_AGLANDFRAUENTEMPLATE_STATIC</option>
+				</field>
+
+				<field name="osm"
+					   type="radio"
+					   class="btn-group btn-group-yesno"
+					   default="0"
+					   label="TPL_AGLANDFRAUENTEMPLATE_OSM_LABEL"
+					   description="TPL_AGLANDFRAUENTEMPLATE_OSM_DESC"
+				>
+					<option value="1">TPL_AGLANDFRAUENTEMPLATE_OSM_FUSS</option>
+					<option value="0">TPL_AGLANDFRAUENTEMPLATE_OSM_ASIDE</option>
+				</field>
+
+				<field name="aside"
+					   type="radio"
+					   class="btn-group btn-group-yesno"
+					   default="r"
+					   label="TPL_AGLANDFRAUENTEMPLATE_ASIDE_LABEL"
+					   description="TPL_AGLANDFRAUENTEMPLATE_ASIDE_DESC"
+				>
+					<option value="l">TPL_AGLANDFRAUENTEMPLATE_LEFT</option>
+					<option value="r">TPL_AGLANDFRAUENTEMPLATE_RIGHT</option>
+				</field>
+
+
+			</fieldset>
+			<fieldset 
+				label="TPL_AGLANDFRAUENTEMPLATE_MENU_FIELDSET_LABEL"
+				description="TPL_AGLANDFRAUENTEMPLATE_MENU_FIELDSET_DESC"
+				name="menu"
+			>
+				<field name="navbarfixedtop"
+					   type="radio"
+					   class="btn-group btn-group-yesno"
+					   default="0"
+					   label="TPL_AGLANDFRAUENTEMPLATE_MENUFIXTOP_LABEL"
+					   description="TPL_AGLANDFRAUENTEMPLATE_MENUFIXTOP_DESC"
+				>
+					<option value="1">TPL_AGLANDFRAUENTEMPLATE_FIX</option>
+					<option value="0">TPL_AGLANDFRAUENTEMPLATE_FREE</option>
+				</field>
+				<field name="navbarfixedbottom"
+					   type="radio"
+					   class="btn-group btn-group-yesno"
+					   default="0"
+					   label="TPL_AGLANDFRAUENTEMPLATE_MENUFIXBOTTOM_LABEL"
+					   description="TPL_AGLANDFRAUENTEMPLATE_MENUFIXBOTTOM_DESC"
+				>
+					<option value="1">TPL_AGLANDFRAUENTEMPLATE_FIX</option>
+					<option value="0">TPL_AGLANDFRAUENTEMPLATE_FREE</option>
+				</field>
+			</fieldset>
+
+
+
+
+
+
+
+			<fieldset 
+				label="TPL_AGLANDFRAUENTEMPLATE_SEO_FIELDSET_LABEL"
+				description="TPL_AGLANDFRAUENTEMPLATE_SEO_FIELDSET_DESC"
+				name="seo"
+			>
+
+				<field name="TrackingId"
+					   type="radio"
+					   class="btn-group btn-group-yesno"
+					   default="0"
+					   label="TPL_AGLANDFRAUENTEMPLATE_TID_LABEL"
+					   description="TPL_AGLANDFRAUENTEMPLATE_TID_DESC"
+				>
+					<option value="1">JYES</option>
+					<option value="0">JNO</option>
+				</field>
+
+				<field name="googleTrackingId" 
+					   class="" 
+					   type="text" 
+					   default="UA-38671465-1"
+					   label="TPL_AGLANDFRAUENTEMPLATE_GTID_LABEL"
+					   description="TPL_AGLANDFRAUENTEMPLATE_GTID_DESC" 
+					   showon="TrackingId:1" 
+				/>
+			</fieldset>
+
+
+
+
+
+			<fieldset 
+				label="TPL_AGLANDFRAUENTEMPLATE_LOGO_FIELDSET_LABEL"
+				description="TPL_AGLANDFRAUENTEMPLATE_LOGO_FIELDSET_DESC"
+				name="logos"
+			>
+
+				<field name="logoFile" 
+					   class="" 
+					   type="media" 
+					   default=""
+					   label="TPL_AGLANDFRAUENTEMPLATE_LOGO_LABEL"
+					   description="TPL_AGLANDFRAUENTEMPLATE_LOGO_DESC" 
+				/>
+
+				<field name="favicon"
+					   type="radio"
+					   class="btn-group btn-group-yesno"
+					   default="0"
+					   label="TPL_AGLANDFRAUENTEMPLATE_FAVICON_LABEL"
+					   description="TPL_AGLANDFRAUENTEMPLATE_FAVICON_DESC"
+				>
+					<option value="1">JYES</option>
+					<option value="0">JNO</option>
+				</field>
+
+				<field name="faviconfolder" 
+					   class="" 
+					   type="folderlist" 
+					   default=""
+					   directory="images" 
+					   filter="" 
+					   exclude="" 
+					   stripext=""
+					   label="TPL_AGLANDFRAUENTEMPLATE_FAVICONFOLDER_LABEL"
+					   description="TPL_AGLANDFRAUENTEMPLATE_FAVICONFOLDER_DESC" 
+					   showon="favicon:1" 
+				/>
+
+				<field name="landerleben"
+					   type="radio"
+					   class="btn-group btn-group-yesno"
+					   default="0"
+					   label="TPL_AGLANDFRAUENTEMPLATE_LANDERLEBEN_LABEL"
+					   description="TPL_AGLANDFRAUENTEMPLATE_LANDERLEBEN_DESC"
+				>
+					<option value="1">JYES</option>
+					<option value="0">JNO</option>
+				</field>
+				<field name="landerlebenposition"
+					   type="radio"
+					   class="btn-group btn-group-yesno"
+					   default="0"
+					   label="TPL_AGLANDFRAUENTEMPLATE_LANDERLEBENP_LABEL"
+					   description="TPL_AGLANDFRAUENTEMPLATE_LANDERLEBENP_DESC"
+					   showon="landerleben:1" 
+				>
+					<option value="1">TPL_AGLANDFRAUENTEMPLATE_LANDERLEBEN_TOP</option>
+					<option value="0">TPL_AGLANDFRAUENTEMPLATE_LANDERLEBEN_ASIDE</option>
+				</field>
+
+			</fieldset>
+
+
+
+
+
+		</fields>
+	</config>
+</extension>

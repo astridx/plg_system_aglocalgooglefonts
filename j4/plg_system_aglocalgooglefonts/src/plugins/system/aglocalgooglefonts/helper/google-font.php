@@ -40,7 +40,7 @@ class GoogleFont
 	 *
 	 * @since   0.0.1
 	 */
-	public function __construct($name, $data = array())
+	public function __construct($name, $data = [])
 	{
 		$this->name = $name;
 		$this->font_data = $data;
@@ -51,25 +51,21 @@ class GoogleFont
 	 */
 	public function generate_css($variants, $subsets)
 	{
-		$css = array();
+		$css = [];
 
-		foreach ($subsets as $subset)
-		{
-			foreach ($variants as $variant)
-			{
+		foreach ($subsets as $subset) {
+			foreach ($variants as $variant) {
 				$italic = false;
 
 				// Normalize variant identifier
 				$variant = $this->_normalize_variant_id($variant);
 
-				if (strpos($variant, 'i') !== false)
-				{
+				if (strpos($variant, 'i') !== false) {
 					$italic = true;
 				}
 
 				// Variant doesn't exist?
-				if (empty($this->font_data[$subset][$variant]))
-				{
+				if (empty($this->font_data[$subset][$variant])) {
 					continue;
 				}
 
@@ -79,22 +75,21 @@ class GoogleFont
 				$data['fontFile'] = $this->download_font($data['fontFile']);
 				$data['fontFileWoff'] = $this->download_font($data['fontFileWoff']);
 
-				if (!$data['fontFile'] || !$data['fontFileWoff'])
-				{
+				if (!$data['fontFile'] || !$data['fontFileWoff']) {
 					// Continue;
 				}
 
 				// Common CSS rules to create
-				$rules = array(
+				$rules = [
 					'font-family: "' . $this->name . '"',
 					'font-weight: ' . intval($variant),
 					'font-style: ' . ($italic ? 'italic' : 'normal')
-				);
+				];
 
 				/**
 				 * Build src array with localNames first and woff/woff2 next
 				 */
-				$src = array();
+				$src = [];
 
 				$src[] = 'url(' . $data['fontFile'] . ") format('woff2')";
 				$src[] = 'url(' . $data['fontFileWoff'] . ") format('woff')";
@@ -102,8 +97,7 @@ class GoogleFont
 				// Add to rules array
 				$rules[] = 'src: ' . implode(', ', $src);
 
-				if (($range = $this->get_unicode_range($subset)))
-				{
+				if (($range = $this->get_unicode_range($subset))) {
 					$rules[] = 'unicode-range: ' . $range;
 				}
 
@@ -131,30 +125,26 @@ class GoogleFont
 		$variant = trim($variant);
 
 		// Google API supports bold and b as variants too
-		if (stripos($variant, 'b') !== false)
-		{
-			$variant = str_replace(array('bold', 'b'), '700', $variant);
+		if (stripos($variant, 'b') !== false) {
+			$variant = str_replace(['bold', 'b'], '700', $variant);
 		}
 
 		// Normalize regular
 		$variant = str_replace('regular', '400', $variant);
 
 		// Remove italics in variant
-		if (strpos($variant, 'i') !== false)
-		{
+		if (strpos($variant, 'i') !== false) {
 			// Normalize italic variant
 			$variant = preg_replace('/(italics|i)$/i', 'italic', $variant);
 
 			// Italic alone isn't recognized
-			if ($variant == 'italic')
-			{
+			if ($variant == 'italic') {
 				$variant = '400italic';
 			}
 		}
 
 		// Fallback to 400
-		if (!$variant || (!strstr($variant, 'italic') && !is_numeric($variant)))
-		{
+		if (!$variant || (!strstr($variant, 'italic') && !is_numeric($variant))) {
 			$variant = '400';
 		}
 
@@ -167,8 +157,7 @@ class GoogleFont
 		$name = $path_parts['filename'] . '.' . $path_parts['extension'];
 		$file = JPATH_PLUGINS . '/system/aglocalgooglefonts/fonts/' . $name;
 
-		if (!file_exists($file))
-		{
+		if (!file_exists($file)) {
 			file_put_contents($file, file_get_contents($url));
 		}
 

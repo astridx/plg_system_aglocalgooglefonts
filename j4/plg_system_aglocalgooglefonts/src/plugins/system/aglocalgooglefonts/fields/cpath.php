@@ -17,5 +17,4 @@ class JFormFieldCpath extends JFormField
 			. htmlspecialchars($this->value, ENT_COMPAT, 'UTF-8') . '"/>'
 			. '</div>';
 	}
-
 }

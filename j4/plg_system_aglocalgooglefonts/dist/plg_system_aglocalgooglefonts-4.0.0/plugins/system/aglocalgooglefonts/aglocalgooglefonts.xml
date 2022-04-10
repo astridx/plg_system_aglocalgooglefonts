@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="plugin" group="system" method="upgrade">
+    <name>PLG_SYSTEM_AGLOCALGOOGLEFONTS</name>
+    <author>Astrid Günther</author>
+    <creationDate>2022-04-10</creationDate>
+    <copyright>(C) 2022 Astrid Günther. All rights reserved.</copyright>
+    <license>GNU General Public License version 2 or later; see LICENSE.txt</license>
+    <authorEmail>info@astrid-guenther.de</authorEmail>
+    <authorUrl>www.astrid-guenther.de</authorUrl>
+    <version>4.0.0</version>
+	<description>PLG_SYSTEM_AGLOCALGOOGLEFONTS_DESC</description>
+    <files>
+        <folder>helper</folder>
+<folder>css</folder>
+<folder>language</folder>
+<file>aglocalgooglefonts.xml</file>
+<file plugin="aglocalgooglefonts">aglocalgooglefonts.php</file>
+<folder>data</folder>
+<folder>cdns</folder>
+<folder>fonts</folder>
+<folder>fields</folder>
+    </files>
+
+	<media 
+        folder="media/plg_system_aglocalgooglefonts" 
+        destination="plg_system_aglocalgooglefonts">
+        <file>index.html</file>
+    </media>
+
+	<config>
+		<fields name="params">
+			<fieldset name="basic">	
+				<field 
+					name="note1" 
+					type="note" 
+					label="PLG_SYSTEM_AGLOCALGOOGLEFONTS_NOTE_MODUS_DR" 
+					description="PLG_SYSTEM_AGLOCALGOOGLEFONTS_NOTE_MODUS_DR_DESC" 
+					class="alert" 
+					close="true"
+				/>
+
+				<field 
+					name="modus_dr" 
+					type="radio"
+					description="PLG_SYSTEM_AGLOCALGOOGLEFONTS_MODUS_DR"
+					label="PLG_SYSTEM_AGLOCALGOOGLEFONTS_MODUS_DR"
+					default="1" 
+					class="btn-group"
+				>
+					<option value="0">DISABLE</option>
+					<option value="1">REPLACE</option>
+				</field>
+
+				<field 
+					name="note2" 
+					type="note" 
+					label="PLG_SYSTEM_AGLOCALGOOGLEFONTS_NOTE_MODUS_AC" 
+					description="PLG_SYSTEM_AGLOCALGOOGLEFONTS_NOTE_MODUS_AC_DESC" 
+					class="alert" 
+					close="true"
+				/>
+
+				<field 
+					name="modus_ac" 
+					type="radio"
+					description="PLG_SYSTEM_AGLOCALGOOGLEFONTS_MODUS_AC"
+					label="PLG_SYSTEM_AGLOCALGOOGLEFONTS_MODUS_AC"
+					default="1" 
+					class="btn-group"
+				>
+					<option value="0">AUTO</option>
+					<option value="1">CUSTOM</option>
+					<option value="2">BOTH</option>
+				</field>
+
+				<field 
+					type="spacer" 
+					name="myspacer1" 
+					hr="true" 
+				/>
+
+				<field 
+					name="addcss" 
+					type="radio"
+					description="PLG_SYSTEM_AGLOCALGOOGLEFONTS_ADDCSS"
+					label="PLG_SYSTEM_AGLOCALGOOGLEFONTS_ADDCSS"
+					default="0" 
+					class="btn-group"
+					showon="modus_ac!:0"
+				>
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
+
+				<field 
+					name="addcssfiles" 
+					type="subform" 
+					icon="list"
+					formsource="plugins/system/aglocalgooglefonts/fields/path.xml" 
+					class="advancedSelect" 
+					min="1" 
+					max="10" 
+					multiple="true" 
+					layout="joomla.form.field.subform.repeatable-table" 
+					groupByFieldset="false" 
+					label="PLG_SYSTEM_AGLOCALGOOGLEFONTS_CSS"
+					showon="addcss:1[AND]modus_ac!:0"
+				/>	
+
+				<field 
+					type="spacer" 
+					name="myspacer2" 
+					hr="true" 
+				/>
+
+				<field 
+					name="addcdn" 
+					type="radio"
+					description="PLG_SYSTEM_AGLOCALGOOGLEFONTS_ADDCDN"
+					label="PLG_SYSTEM_AGLOCALGOOGLEFONTS_ADDCDN"
+					default="0" 
+					class="btn-group"
+					showon="modus_ac!:0"
+				>
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
+
+				<field 
+					name="addcdnfiles" 
+					type="subform" 
+					icon="list"
+					formsource="plugins/system/aglocalgooglefonts/fields/cdnpath.xml" 
+					class="advancedSelect" 
+					min="1" 
+					max="10" 
+					multiple="true" 
+					layout="joomla.form.field.subform.repeatable-table" 
+					groupByFieldset="false" 
+					label="PLG_SYSTEM_AGLOCALGOOGLEFONTS_CDN"
+					showon="addcdn:1[AND]modus_ac!:0"
+				/>	
+
+				<field 
+					type="spacer" 
+					name="myspacer3" 
+					hr="true" 
+				/>
+			</fieldset>
+		</fields>
+	</config>
+</extension>
