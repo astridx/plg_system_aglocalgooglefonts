@@ -50,22 +50,22 @@ $user = JFactory::getUser();
 
 	<body id="fav-componentpage" class="contentpane">
 
-    <div class="fav-container">
+	<div class="fav-container">
 
-      	<!-- MAIN -->
-        <div id="fav-mainwrap">
-          <div class="favth-container">
-            <div class="favth-row">
-      				<div id="fav-main" class="favth-clearfix">
-    				    <div id="fav-maincontent" class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12">
-    							<jdoc:include type="message" />
-    							<jdoc:include type="component" />
-    						</div>
-    					</div>
-    				</div>
-    			</div>
-    		</div>
-    </div>
+		  <!-- MAIN -->
+		<div id="fav-mainwrap">
+		  <div class="favth-container">
+			<div class="favth-row">
+					  <div id="fav-main" class="favth-clearfix">
+						<div id="fav-maincontent" class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12">
+								<jdoc:include type="message" />
+								<jdoc:include type="component" />
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+	</div>
 
 	</body>
 

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="template" client="site" method="upgrade">
-
 	<name>favourite4</name>
 	<version>##VERSION##</version>
 	<creationDate>##DATE##</creationDate>

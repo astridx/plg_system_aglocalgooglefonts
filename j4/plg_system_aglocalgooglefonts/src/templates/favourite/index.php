@@ -1,12 +1,12 @@
 <?php 
 
 /**
-*   Favourite
+*   Favourite4
 *
 *   Responsive and customizable Joomla!3 template by FAVTHEMES
 *
-*   @version        4.2
-*   @link           http://demo.favthemes.com/favourite
+*   @version        
+*   @link           
 *   @author         FavThemes - https://www.favthemes.com
 *   @copyright      Copyright (C) 2012-2018 FavThemes.com. All Rights Reserved.
 *   @license        Licensed under GNU/GPLv3, see http://www.gnu.org/licenses/gpl-3.0.html
@@ -21,23 +21,23 @@ use Joomla\CMS\Factory;
 $app = Factory::getApplication();
 $wa = $this->getWebAssetManager();
 
-$wa->registerAndUseStyle("boostrap2", 'media/templates/site/favourite/media/jui/css/bootstrap.min.css');
-$wa->registerAndUseStyle("bootstrap2-responsive", 'media/templates/site/favourite/media/jui/css/bootstrap-responsive.css');
+$wa->registerAndUseStyle("boostrap2", 'media/templates/site/' . $this->template . '/media/jui/css/bootstrap.min.css');
+$wa->registerAndUseStyle("bootstrap2-responsive", 'media/templates/site/' . $this->template . '/media/jui/css/bootstrap-responsive.css');
 
 HTMLHelper::_('jquery.framework');
 
-$wa->registerAndUseStyle("favth-bootstrap", 'media/templates/site/favourite/bootstrap/favth-bootstrap.css');
-$wa->registerAndUseScript('favth-bootstrap', 'media/templates/site/favourite/bootstrap/favth-bootstrap.js');
+$wa->registerAndUseStyle("favth-bootstrap", 'media/templates/site/' . $this->template . '/bootstrap/favth-bootstrap.css');
+$wa->registerAndUseScript('favth-bootstrap', 'media/templates/site/' . $this->template . '/bootstrap/favth-bootstrap.js');
 
-$wa->registerAndUseScript('favth-scripts', 'media/templates/site/favourite/js/favth-scripts.js');
+$wa->registerAndUseScript('favth-scripts', 'media/templates/site/' . $this->template . '/js/favth-scripts.js');
 
-$wa->registerAndUseStyle("admin", 'media/templates/site/favourite/admin/admin.css', [], [], []);
-$wa->registerAndUseStyle("cms", 'media/templates/site/favourite/css/cms.css');
-$wa->registerAndUseStyle("theme", 'media/templates/site/favourite/css/theme.css');
-$wa->registerAndUseStyle("style", 'media/templates/site/favourite/css/style.css');
-$wa->registerAndUseStyle("styleparam", 'media/templates/site/favourite/css/styles/' . $this->params->get('template_styles') . '.css');
-$wa->registerAndUseStyle("custom", 'media/templates/site/favourite/css/custom.css');
-$wa->registerAndUseStyle("user", 'media/templates/site/favourite/css/user.css');
+$wa->registerAndUseStyle("admin", 'media/templates/site/' . $this->template . '/admin/admin.css', [], [], []);
+$wa->registerAndUseStyle("cms", 'media/templates/site/' . $this->template . '/css/cms.css');
+$wa->registerAndUseStyle("theme", 'media/templates/site/' . $this->template . '/css/theme.css');
+$wa->registerAndUseStyle("style", 'media/templates/site/' . $this->template . '/css/style.css');
+$wa->registerAndUseStyle("styleparam", 'media/templates/site/' . $this->template . '/css/styles/' . $this->params->get('template_styles') . '.css');
+$wa->registerAndUseStyle("custom", 'media/templates/site/' . $this->template . '/css/custom.css');
+$wa->registerAndUseStyle("user", 'media/templates/site/' . $this->template . '/css/user.css');
 
 // Browsers support SVG favicons
 $this->addHeadLink(HTMLHelper::_('image', 'joomla-favicon.svg', '', [], true, 1), 'icon', 'rel', ['type' => 'image/svg+xml']);
@@ -3563,6 +3563,7 @@ $wa->addInlineStyle(
 
     ?>
     </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" integrity="sha512-L7MWcK7FNPcwNqnLdZq86lTHYLdQqZaz5YcAgE+5cnGmlw8JT03QB2+oxL100UeB6RlzZLUxCGSS4/++mNZdxw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 
 <body<?php echo (isset($pageclass) ? ' class="favbody'.htmlspecialchars($pageclass).'"' : ''); ?>>
@@ -3731,7 +3732,7 @@ $wa->addInlineStyle(
                                     <?php if (($show_default_logo) !=0) : ?>
                                     <h1>
                                         <a class="default-logo" href="<?php echo $this->baseurl; ?>/">
-                                            <img src="<?php echo $this->baseurl ?>/templates/<?php echo $this->template ?>/images/logo/<?php echo htmlspecialchars($default_logo);?>"
+                                            <img src="<?php echo $this->baseurl ?>/media/templates/site/<?php echo $this->template ?>/images/logo/<?php echo htmlspecialchars($default_logo);?>"
                                                 style="border:0;"
                                                 alt="<?php echo htmlspecialchars($default_logo_img_alt);?>" />
                                         </a>
@@ -4779,7 +4780,6 @@ $wa->addInlineStyle(
 
         </div><!-- /fav-overlay -->
     </div><!-- /fav-containerwrap -->
-
     </body>
 
 </html>

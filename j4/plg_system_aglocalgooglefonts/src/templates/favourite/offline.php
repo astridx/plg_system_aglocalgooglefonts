@@ -35,20 +35,20 @@ $twofactormethods = UsersHelper::getTwoFactorMethods();
 		<link rel="stylesheet" href="<?php echo $this->baseurl; ?>/templates/system/css/general.css" type="text/css" />
 
 		<!-- STYLESHEETS -->
-    <!-- icons -->
-  	<link rel="stylesheet" href="//use.fontawesome.com/releases/v5.1.0/css/all.css" type="text/css" />
-    <!-- bootstrap -->
-    <link rel="stylesheet" href="<?php echo $this->baseurl; ?>/templates/<?php echo $this->template;?>/bootstrap/favth-bootstrap.css" type="text/css" />
-    <!-- cms -->
-    <link rel="stylesheet" href="<?php echo $this->baseurl; ?>/templates/<?php echo $this->template;?>/css/cms.css" type="text/css" />
-    <!-- theme -->
-    <link rel="stylesheet" href="<?php echo $this->baseurl; ?>/templates/<?php echo $this->template;?>/css/theme.css" type="text/css" />
-    <!-- style -->
-    <link rel="stylesheet" href="<?php echo $this->baseurl; ?>/templates/<?php echo $this->template;?>/css/style.css" type="text/css" />
-    <!-- styles -->
-    <link rel="stylesheet" href="<?php echo $this->baseurl ?>/templates/<?php echo $this->template;?>/css/styles/<?php echo $this->params->get('template_styles'); ?>.css" type="text/css" />
-    <!-- custom -->
-    <link rel="stylesheet" href="<?php echo $this->baseurl; ?>/templates/<?php echo $this->template;?>/css/custom.css" type="text/css" />
+	<!-- icons -->
+	  <link rel="stylesheet" href="//use.fontawesome.com/releases/v5.1.0/css/all.css" type="text/css" />
+	<!-- bootstrap -->
+	<link rel="stylesheet" href="<?php echo $this->baseurl; ?>/templates/<?php echo $this->template;?>/bootstrap/favth-bootstrap.css" type="text/css" />
+	<!-- cms -->
+	<link rel="stylesheet" href="<?php echo $this->baseurl; ?>/templates/<?php echo $this->template;?>/css/cms.css" type="text/css" />
+	<!-- theme -->
+	<link rel="stylesheet" href="<?php echo $this->baseurl; ?>/templates/<?php echo $this->template;?>/css/theme.css" type="text/css" />
+	<!-- style -->
+	<link rel="stylesheet" href="<?php echo $this->baseurl; ?>/templates/<?php echo $this->template;?>/css/style.css" type="text/css" />
+	<!-- styles -->
+	<link rel="stylesheet" href="<?php echo $this->baseurl ?>/templates/<?php echo $this->template;?>/css/styles/<?php echo $this->params->get('template_styles'); ?>.css" type="text/css" />
+	<!-- custom -->
+	<link rel="stylesheet" href="<?php echo $this->baseurl; ?>/templates/<?php echo $this->template;?>/css/custom.css" type="text/css" />
 
 		<?php require("admin/params.php"); ?>
 
@@ -61,11 +61,9 @@ $twofactormethods = UsersHelper::getTwoFactorMethods();
 		<div id="frame" class="outline">
 
 				<?php if ($app->get('offline_image') && file_exists($app->get('offline_image'))) : ?>
-
 					<img src="<?php echo $app->get('offline_image'); ?>" alt="<?php echo htmlspecialchars($app->get('sitename')); ?>" />
 
-				<?php elseif (($show_default_logo) !=0 || ($show_media_logo) !=0 || ($show_text_logo) !=0) : ?>
-
+				<?php else if (($show_default_logo) !=0 || ($show_media_logo) !=0 || ($show_text_logo) !=0) : ?>
 					<?php if (($show_default_logo) !=0) : ?>
 						<h1>
 							<a class="default-logo" href="<?php echo $this->baseurl; ?>/">
@@ -76,7 +74,7 @@ $twofactormethods = UsersHelper::getTwoFactorMethods();
 					<?php if (($show_media_logo) !=0) : ?>
 						<h1>
 							<a class="media-logo" href="<?php echo $this->baseurl; ?>/">
-								<img src="<?php echo $this->baseurl ?>/<?php echo htmlspecialchars($media_logo);?>" style="border:0;" alt="<?php echo htmlspecialchars($media_logo_img_alt );?>" />
+								<img src="<?php echo $this->baseurl ?>/<?php echo htmlspecialchars($media_logo);?>" style="border:0;" alt="<?php echo htmlspecialchars($media_logo_img_alt);?>" />
 							</a>
 						</h1>
 					<?php endif;?>
@@ -86,8 +84,7 @@ $twofactormethods = UsersHelper::getTwoFactorMethods();
 						</h1>
 					<?php endif;?>
 
-		  	<?php else : ?>
-
+				<?php else : ?>
 					<h1>
 						<?php echo htmlspecialchars($app->get('sitename')); ?>
 					</h1>
@@ -95,13 +92,11 @@ $twofactormethods = UsersHelper::getTwoFactorMethods();
 				<?php endif; ?>
 
 				<?php if ($app->get('display_offline_message', 1) == 1 && str_replace(' ', '', $app->get('offline_message')) != '') : ?>
-
 					<p class="fav-offline-msg">
 						<?php echo $app->get('offline_message'); ?>
 					</p>
 
-				<?php elseif ($app->get('display_offline_message', 1) == 2 && str_replace(' ', '', JText::_('JOFFLINE_MESSAGE')) != '') : ?>
-
+				<?php else if ($app->get('display_offline_message', 1) == 2 && str_replace(' ', '', JText::_('JOFFLINE_MESSAGE')) != '') : ?>
 					<p class="fav-offline-msg">
 						<?php echo JText::_('JOFFLINE_MESSAGE'); ?>
 					</p>
